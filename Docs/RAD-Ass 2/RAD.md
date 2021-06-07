@@ -141,9 +141,10 @@ d. The length of the document should be between 4-8 pages.
      - <span style="color:green">***…”***</span>
 
 3. **Conclusion:** Write the concluding remarks here.
+
 4. **Reference**: List the existing literature (documents/articles/blogs/research papers) references you have considered for finalizing the project idea.
 
-
+   
 
 [^1]: **The security requirements should be mapped with the SBD requirement analysis (phase 1) checklist. You are free to write the security requirements in the form of a user story/abuse case.**
 
