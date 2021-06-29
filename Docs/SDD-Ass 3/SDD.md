@@ -31,7 +31,13 @@ iv) The length of the document should be 4 to 8 pages.
 
 3. **Architectural Design**
 
-   <span style="color:blue">*(Create diagrams to depict a high-level impression of your system with **UML diagrams such as Use Case, Class, Activity, and Data Flow diagrams** using online tools, i.e. draw.io (free tool), etc.  This section aims to understand the system and its basic components, how the components interact with each other, data repositories, security requirements in design such as trust boundaries, input/output points, swapping/updating firmware for fixing bugs, and adding new features to the product, etc.)*</span>
+   <span style="color:blue">*(Create diagrams to depict a high-level impression of your system using **UML diagrams that should include Use case, Class, Activity, and Data flow diagrams** (at least one diagram for each category).*</span>
+
+   <span style="color:blue">*The diagrams can be drawn using **online tools, i.e. draw.io (free tool)**, etc.* </span>
+
+   <span style="color:blue">*Write the **motivation for all your UML diagrams** to highlight the project features and requirements.*</span>
+
+   <span style="color:blue">*This section aims to understand the system and its basic components, how the **components interact with each other**, **data repositories, security requirements in design** such as trust boundaries, input/output points, swapping/updating firmware for fixing bugs, and adding new features to the product, etc.)*.</span>
 
    
 
