@@ -100,7 +100,9 @@ d. The length of the document should be between 4-8 pages.
 
 2. **Product features:** 
 
-   This section describes the functionality that you want to have in your product such as the components used for the application and its functionality, appearance, performance in terms of speed/time, etc. You can specify them in the form of functional and non-functional requirements. 
+   This section describes the functionality that you want to have in your product such as the components used for the application and its functionality, appearance, performance in terms of speed/time, etc. You can specify them in the form of functional and non-functional requirements. **The minimum number of requirements for your application should be 7 that includes the functional as well as non-functional requirements.**
+
+   
 
    ​	**A.** **Functional requirements:** 
 
@@ -144,12 +146,11 @@ d. The length of the document should be between 4-8 pages.
 
 4. **Reference**: List the existing literature (documents/articles/blogs/research papers) references you have considered for finalizing the project idea.
 
-   
+
 
 [^1]: **The security requirements should be mapped with the SBD requirement analysis (phase 1) checklist. You are free to write the security requirements in the form of a user story/abuse case.**
 
 ​																																										
-
 
 ​																																										Prepared by: Dipti K. Sarmah                               
 
