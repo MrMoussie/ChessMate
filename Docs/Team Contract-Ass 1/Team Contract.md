@@ -37,7 +37,7 @@
 
 
 
-3. **Team Expectations (Mention at least 5 for each of the criteria)**
+3. **Team Expectations (Mention at least 3 for each of the criteria)**
 
    What do you expect from the team members for the a) Participation, b) Meetings, c) Communication, d) Conduct, and e) Conflict
 
@@ -104,8 +104,8 @@
 
 |**Commitments (C)**|**A signal on your commitments (Yes/No)**|**Team Member’s Signature (Image)**|
 | :- | :-: | :- |
-||Member 1|Member 2|
-|**Example**  <span style='color:blue'>*i). As a team member I’ll always be on time in all the meetings with the preparation and agenda in my mind.* </span>|Yes|Yes|
+||Member 1, Member 2, Member 3, Member 4, Member 5, Member 6||
+|**Example**  <span style='color:blue'>*i). As a team member I’ll always be on time in all the meetings with the preparation and agenda in my mind.* </span>|Yes||
 |<span style='color:blue'>*ii). As a team member I’ll always give importance to ideas and show respect to all the members.*</span>|||
 |<span style='color:blue'>*iii) c. As a team member I’ll always be transparent with my team.*</span>|||
 |…|||

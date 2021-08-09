@@ -100,7 +100,7 @@ d. The length of the document should be between 4-8 pages.
 
 2. **Product features:** 
 
-   This section describes the functionality that you want to have in your product such as the components used for the application and its functionality, appearance, performance in terms of speed/time, etc. You can specify them in the form of functional and non-functional requirements. **The minimum number of requirements for your application should be 7 that includes the functional as well as non-functional requirements.**
+   This section describes the functionality that you want to have in your product such as the components used for the application and its functionality, appearance, performance in terms of speed/time, etc. You can specify them in the form of functional and non-functional requirements. <span style="color:blue">A minimum number of 7 requirements (9 in case of selecting an existing application) is to be expected for your application. That includes functional as well as non-functional requirements cumulatively. However, it is highly probable that you will need more than the minimum amount to fully cover all the requirements. </span>
 
    
 
