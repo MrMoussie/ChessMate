@@ -142,7 +142,7 @@ d. The length of the document should be between 4-8 pages.
      - <span style="color:green">*To access the application, one should require authentication.* </span>**(Security requirement) [^1]**
      - <span style="color:green">***…”***</span>
 
-3. **Conclusion:** Write the concluding remarks here.
+3. **Conclusion:** Write the concluding remarks here. You can do this by **highlighting noteworthy design decisions and challenges** for the next phase that you recognized.
 
 4. **Reference**: List the existing literature (documents/articles/blogs/research papers) references you have considered for finalizing the project idea.
 
