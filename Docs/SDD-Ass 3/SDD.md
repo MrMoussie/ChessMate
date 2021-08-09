@@ -55,13 +55,13 @@ iv) The length of the document should be 4 to 8 pages.
 
 6. **The cost involved (if any):**
 
-   <span style="color:blue">*(This section is used to mention the **cost involved** to implement the necessary security controls for your application.)* </span>
+   <span style="color:blue">*(This section is used to mention the **cost involved** to implement the necessary security controls for your application. *This includes both time and money related costs.*)* </span>
 
    
 
 7. **Conclusion:**
 
-   <span style="color:blue">*(You should give the **concluding remarks** of your document.)*</span>
+   <span style="color:blue">*(You should give the **concluding remarks** of your document. *You can do this by* **highlighting noteworthy design decisions** *and* **challenges** *for the next phase that you recognized.*)*</span>
 
 **Reference:**
 
