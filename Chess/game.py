@@ -8,6 +8,8 @@ player1 = Player("Joe")
 player2 = Naive('s')
 turn = 0
 
+
+
 while board.is_checkmate()==False:
     if (turn%2)==0:
         mv1 = player1.makeMove(board)
