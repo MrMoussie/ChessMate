@@ -1,19 +1,20 @@
+
 import speech_recognition as sr
 
-def getMove():
+def getmove():
     # obtain audio from the microphone
-    r = sr.Recognizer()
+    r = sr.recognizer()
     move = ""
-    with sr.Microphone() as source:
-        print("Say something!")
+    with sr.microphone() as source:
+        print("say something!")
         audio = r.listen(source)
 
-    # recognize speech using Google Speech Recognition
+    # recognize speech using google speech recognition
     try:
-        move = r.recognize_google(audio, language = "en-US");
-        print("Google Speech Recognition thinks you said " + move)
-    except sr.UnknownValueError:
-        print("Google Speech Recognition could not understand audio")
-    except sr.RequestError as e:
-        print("Could not request results from Google Speech Recognition service; {0}".format(e))
+        move = r.recognize_google(audio, language = "en-us");
+        print("google speech recognition thinks you said " + move)
+    except sr.unknownvalueerror:
+        print("google speech recognition could not understand audio")
+    except sr.requesterror as e:
+        print("could not request results from google speech recognition service; {0}".format(e))
     return move

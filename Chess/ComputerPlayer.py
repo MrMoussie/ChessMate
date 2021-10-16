@@ -1,6 +1,7 @@
 import Players
 import re
 import random
+
 class Naive():
 
     def __init__(self, name):
