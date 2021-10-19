@@ -1,0 +1,4 @@
+Kill 4 pawns in a single match.
+Get 4 pawns killed in a single match.
+Kill 1 bishop and 1 knight in a single game.
+Kill 1 bishop and 1 rook in a single game.

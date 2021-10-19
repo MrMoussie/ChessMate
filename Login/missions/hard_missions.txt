@@ -1,0 +1,4 @@
+Kill a queen using a queen.
+Kill 1 pawn using the king.
+Give a check using a pawn.
+Kill 1 bishop, 1 rook and 1 knight in a single game.

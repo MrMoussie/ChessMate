@@ -1,0 +1,3 @@
+Finish the game in 4 moves.
+Revive a piece.
+Kill a horse using a horse.
