@@ -19,12 +19,13 @@ i = 0
 
 manager = pygame_gui.UIManager((800, 600))
 bob = pygame_gui.UIManager((800, 600))
-# def Test():
-#     ButtonLayoutRectL = pygame.Rect(340, 350, 100, 30)
-#     Login = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectL, text='Login', manager=manager)
+petra = pygame_gui.UIManager((800, 600))
+pol = pygame_gui.UIManager((800, 600))
+daan = pygame_gui.UIManager((800, 600))
 
 ButtonLayoutRectL = pygame.Rect(340, 350, 100, 30)
 ButtonLayoutRectS = pygame.Rect(340, 400, 100, 30)
+ButtonLayoutRectU = pygame.Rect(340, 450, 100, 30)
 EntryLayoutRectU = pygame.Rect(250, 200, 300, 40)
 EntryLayoutRectP = pygame.Rect(250, 300, 300, 40)
 
@@ -35,7 +36,11 @@ Password = pygame_gui.elements.UITextEntryLine(relative_rect=EntryLayoutRectP, m
 
 PlayGame = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectL, text='Play game', manager=bob)
 ScoreBoard = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Score board', manager=bob)
-Logout = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Logout', manager=bob)
+Logout = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Logout', manager=bob)
+
+GoBack1 = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Return', manager=petra)
+GoBack2 = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Return', manager=pol)
+GoBack3 = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Return', manager=daan)
 
 
 clock = pygame.time.Clock()
@@ -52,24 +57,59 @@ while is_running:
 
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
-                print(i)
                 if event.ui_element == Login:
                     i = 1
+                    # when the button is pressed hello world in printed in the command line
+                    # check if the entryboxes contain correct information
+                    # if not give error message
+                if event.ui_element == SignUp:
+                    i = 2
+                if event.ui_element == PlayGame:
                     print(i)
-                   # LoginPage()
-                    print('Hello World!') #when the button is pressed hello world in printed in the command line
-                    #check if the entryboxes contain correct information
-                    #if not give error message
+                    i = 3
+                if event.ui_element == ScoreBoard:
+                    print(i)
+                    i = 4
+                if event.ui_element == Logout:
+                    print(i)
+                    i = 5
+                if event.ui_element == GoBack1 or event.ui_element == GoBack2 or event.ui_element == GoBack3:
+                    print(i)
+                    i = 6
 
-        #manager.process_events(event)
         if(i == 0):
             manager.process_events(event)
         if(i == 1):
+            bob.process_events(event)
+        if(i == 2):
+            petra.process_events(event)
+        if(i == 3):
+            pol.process_events(event)
+        if(i == 4):
+            daan.process_events(event)
+        if(i == 5):
+            manager.process_events(event)
+        if(i == 6):
             bob.process_events(event)
     if(i == 0):
         manager.update(time_delta)
         manager.draw_ui(window_surface)
     if(i == 1):
+        bob.update(time_delta)
+        bob.draw_ui(window_surface)
+    if(i == 2):
+        petra.update(time_delta)
+        petra.draw_ui(window_surface)
+    if(i == 3):
+        pol.update(time_delta)
+        pol.draw_ui(window_surface)
+    if(i == 4):
+        daan.update(time_delta)
+        daan.draw_ui(window_surface)
+    if(i == 5):
+        manager.update(time_delta)
+        manager.draw_ui(window_surface)
+    if (i == 6):
         bob.update(time_delta)
         bob.draw_ui(window_surface)
 
