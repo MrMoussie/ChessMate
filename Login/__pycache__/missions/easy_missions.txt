@@ -1,0 +1,10 @@
+Kill 2 pawns in a single game.
+Kill 1 bishop.
+Kill 1 knight.
+Kill 1 rook.
+Kill 1 pawn using a knight.
+Kill 1 pawn using a bishop.
+Kill 1 pawn using the queen.
+Kill 1 pawn using a rook.
+Kill 1 pawn using a pawn.
+Get 1 pawn killed within the first 6 moves.

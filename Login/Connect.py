@@ -2,6 +2,8 @@ import mysql.connector
 import configparser
 
 configFile = "SQL.cfg"
+missionFile = ["easy_missions.txt", "medium_missions.txt", "hard_missions.txt", "expert_missions.txt"]
+
 db = ""
 
 def connectExists(sql):
@@ -47,7 +49,25 @@ def setupDB(sql):
         
         mycursor.execute('CREATE TABLE IF NOT EXISTS login (%s, %s, %s, %s)' % 
             ("name VARCHAR(25) PRIMARY KEY", "email VARCHAR(255)", "hash VARCHAR(255) NOT NULL", "salt VARCHAR(255) NOT NULL"))
-        mycursor.execute("SHOW DATABASES")
 
-        for x in mycursor:
-            print(x)
+        mycursor.execute('CREATE TABLE IF NOT EXISTS easy_missions (%s, %s)' %
+            ("id INT PRIMARY KEY AUTO_INCREMENT", "description VARCHAR(255)"))
+        mycursor.execute('CREATE TABLE IF NOT EXISTS medium_missions (%s, %s)' %
+            ("id INT PRIMARY KEY", "description VARCHAR(255)"))
+        mycursor.execute('CREATE TABLE IF NOT EXISTS hard_missions (%s, %s)' %
+            ("id INT PRIMARY KEY", "description VARCHAR(255)"))
+        mycursor.execute('CREATE TABLE IF NOT EXISTS expert_missions (%s, %s)' %
+            ("id INT PRIMARY KEY", "description VARCHAR(255)"))
+        
+        setupMissions(sql)
+
+def setupMissions(sql):
+    mycursor = sql.cursor()
+    #TO-DO: make it work with the missions folder
+    with open("/missions/" + missionFile[0]) as file:
+        fileName = file.name.split(".")[0]
+        for line in file:
+            mycursor.execute("INSERT INTO %s (description) VALUES ('%s');" 
+                % (fileName, line.rstrip()))
+    
+    sql.commit()
