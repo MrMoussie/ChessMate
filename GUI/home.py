@@ -1,6 +1,9 @@
 # https://pygame-gui.readthedocs.io/en/latest/quick_start.html#quick-start
+# http://bluegalaxy.info/codewalk/2017/10/14/python-how-to-create-gui-pop-up-windows-with-tkinter/
+
 import pygame
 import pygame_gui
+from tkinter import *
 
 pygame.init()
 
@@ -9,13 +12,9 @@ window_surface = pygame.display.set_mode((800, 600))
 
 font_color=(0,150,250)
 font_obj=pygame.font.Font("C:\Windows\Fonts\segoeprb.ttf",25)
-# Render the objects
 text_obj=font_obj.render("ChessMate",True,font_color)
 
 i = 0
-
-#background = pygame.Surface((800, 600))
-#background.fill(pygame.Color('#FFFFFF'))
 
 manager = pygame_gui.UIManager((800, 600))
 bob = pygame_gui.UIManager((800, 600))
@@ -42,14 +41,32 @@ GoBack1 = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Re
 GoBack2 = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Return', manager=pol)
 GoBack3 = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Return', manager=daan)
 
-
 clock = pygame.time.Clock()
 is_running = True
+
+def alert_popup(title, message, path):
+    """Generate a pop-up window for special messages."""
+    root = Tk()
+    root.title(title)
+    w = 400     # popup window width
+    h = 200     # popup window height
+    sw = root.winfo_screenwidth()
+    sh = root.winfo_screenheight()
+    x = (sw - w)/2
+    y = (sh - h)/2
+    root.geometry('%dx%d+%d+%d' % (w, h, x, y))
+    m = message
+    m += '\n'
+    m += path
+    w = Label(root, text=m, width=120, height=10)
+    w.pack()
+    b = Button(root, text="OK", command=root.destroy, width=10)
+    b.pack()
+    mainloop()
 
 while is_running:
     window_surface.fill((255, 255, 255))
     window_surface.blit(text_obj, (330, 100))
-
     time_delta = clock.tick(60)/1000.0
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -58,10 +75,12 @@ while is_running:
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == Login:
-                    i = 1
-                    # when the button is pressed hello world in printed in the command line
-                    # check if the entryboxes contain correct information
-                    # if not give error message
+                    if Username.get_text() == "julia" and Password.get_text() == "1":
+                        #change "julia" and "1" for checking with the database
+                        i = 1
+                    else:
+                        alert_popup("Error", "Either your password or username is incorrect.", "Please try again.")
+
                 if event.ui_element == SignUp:
                     i = 2
                 if event.ui_element == PlayGame:
