@@ -1,9 +1,9 @@
 import Connect
 
 def main():
-    Connect.connect()
-    Connect.setupDB()
-    Connect.close()
+    sql = Connect.connect()
+    Connect.setupDB(sql)
+    Connect.close(sql)
 
 if __name__ == "__main__":
     main()
