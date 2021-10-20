@@ -5,7 +5,6 @@ configFile = "SQL.cfg"
 missionFiles = ["easy_missions.txt", "medium_missions.txt", "hard_missions.txt", "expert_missions.txt"]
 
 db = ""
-
 sql = None
 
 def getSQL():

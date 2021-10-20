@@ -39,6 +39,11 @@ def login(name, password):
         if (not accountExists(name)):
             print("Error: Account does not exist!")
         
-        #TO-DO
-    
-    return
+        querySalt = "SELECT salt FROM %s.login WHERE name = '%s';" % (Connect.db, name)
+        salt = Queries.selectSingleQuery(querySalt)
+        queryPass = "SELECT hash FROM %s.login WHERE name = '%s';" % (Connect.db, name)
+        hashedPass = Queries.selectSingleQuery(queryPass)
+
+        return True if hashedPass == hash(password, salt) else False
+        
+    return False
