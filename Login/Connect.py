@@ -38,6 +38,7 @@ def connect():
 def close(sql):
     if (connectExists(sql)):
         sql.cursor().close()
+        sql.close()
         print("SQL: Connection closed!")
 
 #Create database and table in case it does not already exist
@@ -63,9 +64,13 @@ def setupMissions(sql):
     for i in range(len(missionFiles)):
         with open("missions/" + missionFiles[i]) as file:
             fileName = missionFiles[i].split(".")[0]
-            for line in file:
-                query = "INSERT INTO %s (description) VALUES ('%s');" % (fileName, line.rstrip())
-                mycursor.execute(query)
+            mycursor.execute("SELECT COUNT(*) FROM %s;" % fileName)
+            count = mycursor.fetchone()
+
+            if (not count[0]):
+                for line in file:
+                    query = "INSERT INTO %s (description) VALUES ('%s');" % (fileName, line.rstrip())
+                    mycursor.execute(query)
     
         sql.commit()
 
