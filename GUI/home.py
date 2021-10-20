@@ -1,8 +1,8 @@
 # https://pygame-gui.readthedocs.io/en/latest/quick_start.html#quick-start
 # http://bluegalaxy.info/codewalk/2017/10/14/python-how-to-create-gui-pop-up-windows-with-tkinter/
 
-import pygame
-import pygame_gui
+import pygame, pygame_gui
+import board, GUI_config as cf
 from tkinter import *
 
 pygame.init()
@@ -92,6 +92,7 @@ while is_running:
 # In this if statement you can add the part where the new user information is stored in the database (for signing up)
                     i = 2
                 if event.ui_element == PlayGame:
+                    board.draw_board(cf.START_FEN, window_surface)
 # In this if statement you should call on the game (make the game a seperate class)
                     i = 3
                 if event.ui_element == ScoreBoard:
