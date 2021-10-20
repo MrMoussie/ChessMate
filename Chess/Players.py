@@ -19,7 +19,6 @@ class Player():
                     doMove = board.parse_uci(move)
             except ValueError:
                 return
-
             return doMove
         else: return None
     
