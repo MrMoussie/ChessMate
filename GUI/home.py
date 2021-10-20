@@ -27,6 +27,7 @@ ButtonLayoutRectS = pygame.Rect(340, 400, 100, 30)
 ButtonLayoutRectU = pygame.Rect(340, 450, 100, 30)
 EntryLayoutRectU = pygame.Rect(250, 200, 300, 40)
 EntryLayoutRectP = pygame.Rect(250, 300, 300, 40)
+EntryLayoutRectR = pygame.Rect(250, 150, 300, 40)
 
 Login = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectL, text='Login', manager=manager)
 SignUp = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Sign up', manager=manager)
@@ -36,6 +37,13 @@ Password = pygame_gui.elements.UITextEntryLine(relative_rect=EntryLayoutRectP, m
 PlayGame = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectL, text='Play game', manager=bob)
 ScoreBoard = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Score board', manager=bob)
 Logout = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Logout', manager=bob)
+
+SignUpScreen = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Sign up', manager=petra)
+FullName = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 150, 300, 40), manager=petra)
+EmailAddress = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 200, 300, 40), manager=petra)
+UsernameEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 250, 300, 40), manager=petra)
+PasswordEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 300, 300, 40), manager=petra)
+PasswordEntryRepeat = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 350, 300, 40), manager=petra)
 
 GoBack1 = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Return', manager=petra)
 GoBack2 = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Return', manager=pol)
@@ -76,24 +84,22 @@ while is_running:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == Login:
                     if Username.get_text() == "julia" and Password.get_text() == "1":
-                        #change "julia" and "1" for checking with the database
+# In this if statement you can add the checking with the database part (for logging in)
                         i = 1
                     else:
                         alert_popup("Error", "Either your password or username is incorrect.", "Please try again.")
-
                 if event.ui_element == SignUp:
+# In this if statement you can add the part where the new user information is stored in the database (for signing up)
                     i = 2
                 if event.ui_element == PlayGame:
-                    print(i)
+# In this if statement you should call on the game (make the game a seperate class)
                     i = 3
                 if event.ui_element == ScoreBoard:
-                    print(i)
+# Here we should add the part of the scoreboard, not yet sure how to implement that
                     i = 4
                 if event.ui_element == Logout:
-                    print(i)
                     i = 5
                 if event.ui_element == GoBack1 or event.ui_element == GoBack2 or event.ui_element == GoBack3:
-                    print(i)
                     i = 6
 
         if(i == 0):
