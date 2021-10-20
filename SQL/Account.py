@@ -10,7 +10,7 @@ def hash(password, salt):
 #Check if account already exists
 def accountExists(name):
     query = "SELECT COUNT(*) FROM %s.login WHERE name = '%s';" % (Connect.db, name)
-    result = Queries.selectSingleQuery(query)
+    result = Queries.getSQuery(query)
 
     return bool(result) if query != None else True
 
@@ -40,9 +40,9 @@ def login(name, password):
             print("Error: Account does not exist!")
         
         querySalt = "SELECT salt FROM %s.login WHERE name = '%s';" % (Connect.db, name)
-        salt = Queries.selectSingleQuery(querySalt)
+        salt = Queries.getSQuery(querySalt)
         queryPass = "SELECT hash FROM %s.login WHERE name = '%s';" % (Connect.db, name)
-        hashedPass = Queries.selectSingleQuery(queryPass)
+        hashedPass = Queries.getSQuery(queryPass)
 
         return True if hashedPass == hash(password, salt) else False
         
