@@ -6,12 +6,20 @@ missionFiles = ["easy_missions.txt", "medium_missions.txt", "hard_missions.txt",
 
 db = ""
 
-def connectExists(sql):
+sql = None
+
+def getSQL():
+    return sql
+
+def connectExists():
+    global sql
+
     return sql != None and sql.cursor() != None
 
 #Connects to SQL database with credentials of the configuration file.
 def connect():
     global db
+    global sql
 
     print("SQL: Connecting...")
 
@@ -29,21 +37,23 @@ def connect():
             password=config['SQL']['password']
         )
         print("SQL: Connected to [{0}@{1}]!".format(user, host))
-        return sql
     except Exception as e:
         print(e)
-        return None
-
+        
 #Close connection with SQL database
-def close(sql):
-    if (connectExists(sql)):
+def close():
+    global sql
+
+    if (connectExists()):
         sql.cursor().close()
         sql.close()
         print("SQL: Connection closed!")
 
 #Create database and table in case it does not already exist
-def setupDB(sql):
-    if connectExists(sql):
+def setupDB():
+    global sql
+
+    if connectExists():
         mycursor = sql.cursor()
         mycursor.execute("CREATE DATABASE IF NOT EXISTS %s" % db)
         mycursor.execute("USE %s" % db)
@@ -55,10 +65,12 @@ def setupDB(sql):
             mycursor.execute('CREATE TABLE IF NOT EXISTS %s (%s, %s)' %
                 (missionFiles[i].split(".")[0], "id INT PRIMARY KEY AUTO_INCREMENT", "description VARCHAR(255)"))
         
-        setupMissions(sql)
+        setupMissions()
 
 #Setup mission tables in database
-def setupMissions(sql):
+def setupMissions():
+    global sql
+
     mycursor = sql.cursor()
 
     for i in range(len(missionFiles)):
@@ -75,7 +87,8 @@ def setupMissions(sql):
         sql.commit()
 
 #Drops the missions tables
-def dropMissions(sql):
+def dropMissions():
+    global sql
     mycursor = sql.cursor()
 
     for i in range(len(missionFiles)):
