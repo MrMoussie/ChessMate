@@ -6,8 +6,8 @@ def main():
     Connect.setupDB(sql)
     Connect.setupMissions(sql)
     #Connect.dropMissions(sql)
-    query = "SELECT description FROM ChessMate.easy_missions"
-    Queries.selectQuery(sql, query)
+    query = "SELECT description FROM ChessMate.easy_missions WHERE id = 1"
+    Queries.selectSingleQuery(sql, query)
     Connect.close(sql)
 
 if __name__ == "__main__":
