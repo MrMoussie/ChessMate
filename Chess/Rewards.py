@@ -25,10 +25,10 @@ def analyzeMove(board, player, move):
     print(victims)
     return victim
 def check_victims(player):
-
-    #print(no_of_victims)
+#print(no_of_victims)
     pawns_killed = (victims.get(player)).count("PAWN")
     print(pawns_killed)
+    
 
 
 
