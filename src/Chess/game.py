@@ -6,7 +6,7 @@ from src.Chess.ComputerPlayer import Naive
 from src.Chess.ComputerPlayer import Smart
 import src.Chess.Rewards as Rewards
 import src.GUI.board as Board
-#from src.GUI import board as BOARD
+import time
 
 # init Board
 board = chess.Board()
@@ -31,6 +31,7 @@ def start(window):
         print(board.fen())
         Board.draw_board(board.fen(), window)
         pygame.display.update()
+        time.sleep(2)
         player = turn % 2
         if player == 0:
             move = player1.makeMove(board)

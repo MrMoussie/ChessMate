@@ -3,7 +3,7 @@
 
 import pygame, pygame_gui, board, config
 from tkinter import *
-from Chess import game
+from src.Chess import game
 
 pygame.init()
 pygame.display.set_caption('ChessMate')
@@ -129,7 +129,6 @@ while is_running:
         petra.draw_ui(window_surface)
     elif i == 3:
         # PLAY GAME HERE
-
         game.start(window_surface)
         # board.draw_board(Update.getFEN(), window_surface)
 
