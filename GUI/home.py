@@ -116,7 +116,7 @@ while is_running:
         if(i == 5):
             manager.process_events(event)
         if(i == 6):
-            bob.process_events(event)
+            manager.process_events(event)
     if(i == 0):
         manager.update(time_delta)
         manager.draw_ui(window_surface)
@@ -136,8 +136,8 @@ while is_running:
         manager.update(time_delta)
         manager.draw_ui(window_surface)
     if (i == 6):
-        bob.update(time_delta)
-        bob.draw_ui(window_surface)
+        manager.update(time_delta)
+        manager.draw_ui(window_surface)
 
     #window_surface.blit(background, (0, 0))
     #manager.draw_ui(window_surface)
