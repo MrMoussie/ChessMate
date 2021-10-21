@@ -8,7 +8,7 @@ from tkinter import *
 pygame.init()
 
 pygame.display.set_caption('ChessMate')
-window_surface = pygame.display.set_mode((800, 600))
+window_surface = pygame.display.set_mode((800, 600), pygame.RESIZABLE)
 
 font_color=(0,150,250)
 font_obj=pygame.font.Font("C:\Windows\Fonts\segoeprb.ttf",25)
@@ -92,7 +92,7 @@ while is_running:
 # In this if statement you can add the part where the new user information is stored in the database (for signing up)
                     i = 2
                 if event.ui_element == PlayGame:
-                    board.draw_board(cf.START_FEN, window_surface)
+                    window_surface = pygame.display.set_mode((512, 512), pygame.RESIZABLE)
 # In this if statement you should call on the game (make the game a seperate class)
                     i = 3
                 if event.ui_element == ScoreBoard:
@@ -127,8 +127,9 @@ while is_running:
         petra.update(time_delta)
         petra.draw_ui(window_surface)
     if(i == 3):
+        board.draw_board(cf.START_FEN, window_surface)
         pol.update(time_delta)
-        pol.draw_ui(window_surface)
+        # pol.draw_ui(window_surface)
     if(i == 4):
         daan.update(time_delta)
         daan.draw_ui(window_surface)

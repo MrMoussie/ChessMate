@@ -3,9 +3,10 @@ import pygame, pygame_gui, GUI_config as cf
 # import time # TO BE REMOVED
 
 bg = pygame.image.load(cf.image_dir + "chessboard.png")
+ww = bg.get_width()     # get image width
+wh = bg.get_height()    # get image height
 
 def draw_board(FEN, window):
-    testiterator = 0 # TO BE REMOVED
     window.blit(bg, (0, 0))
     i = 0           # the rows of the chessboard
     index = 0       # keep track of where in the FEN-string you are
@@ -18,32 +19,32 @@ def draw_board(FEN, window):
                 continue
             elif x.isdigit():
                 j+=int(x)
+                continue
             else:
-                draw_piece(x, ([i, j]), window, testiterator)
-                testiterator += 1 # TO BE REMOVED
+                draw_piece(x, ([j, i]), window)
             j+=1
         i += 1
     # time.sleep(5)
 
 
-def draw_piece(char, location, window, *it):
+def draw_piece(char, location, window):
     color = "Black_"
     type = "Pawn"
-    if char in "ABCDEFGH":
+    if char in "RNBQKP":
         color = "White_"
         char.lower()
-    if char == "r":
+    if char == "r" or char == "R":
         type = "Rook"
-    elif char == "n":
+    elif char == "n" or char == "N":
         type = "Knight"
-    elif char == "b":
+    elif char == "b" or char == "B":
         type = "Bishop"
-    elif char == "q":
+    elif char == "q" or char == "Q":
         type = "Queen"
-    elif char == "k":
+    elif char == "k" or char == "K":
         type = "King"
     piece_name = cf.image_dir + color + type + ".png"
-    # print(char)
-    print("" + str(it[0]) + ". " + piece_name + " " + str(location[0]) + "," + str(location[1]))
+    print(char)
+    print(piece_name + " " + str(location[0]) + "," + str(location[1]))
     piece = pygame.image.load(piece_name)
-    window.blit(piece, (location[0], location[1]))
+    window.blit(piece, (location[0] / 8 * ww, location[1] / 8 * wh))
