@@ -1,0 +1,10 @@
+Kill 4 pawns in a single match.
+Get 4 pawns killed in a single match.
+Kill 1 bishop and 1 knight in a single game.
+Kill 1 bishop and 1 rook in a single game.
+Get 1 pawn killed within the first 4 moves.
+Perform castling.
+Survive 3 checks in a single game.
+Kill a bishop using a bishop.
+Win a game.
+Win a game within 40 moves. 
