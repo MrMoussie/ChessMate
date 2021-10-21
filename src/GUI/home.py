@@ -92,7 +92,7 @@ while is_running:
 # In this if statement you can add the part where the new user information is stored in the database (for signing up)
                     i = 2
                 if event.ui_element == PlayGame:
-                    window_surface = pygame.display.set_mode((512, 512), pygame.RESIZABLE)
+                    window_surface = pygame.display.set_mode((cf.bg.get_width(), cf.bg.get_height()), pygame.RESIZABLE)
 # In this if statement you should call on the game (make the game a seperate class)
                     i = 3
                 if event.ui_element == ScoreBoard:

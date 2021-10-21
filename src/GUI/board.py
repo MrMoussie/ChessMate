@@ -2,9 +2,13 @@ import pygame, pygame_gui, GUI_config as cf
 
 # import time # TO BE REMOVED
 
-bg = pygame.image.load(cf.image_dir + "chessboard.png")
+bg = cf.bg
 ww = bg.get_width()     # get image width
 wh = bg.get_height()    # get image height
+pieces = []
+for piece in cf.pieces:
+    pieces.append(pygame.image.load("" + cf.image_dir + "Black_" + piece + ".png"))
+    pieces.append(pygame.image.load("" + cf.image_dir + "White_" + piece + ".png"))
 
 def draw_board(FEN, window):
     window.blit(bg, (0, 0))
@@ -29,22 +33,23 @@ def draw_board(FEN, window):
 
 def draw_piece(char, location, window):
     color = "Black_"
-    type = "Pawn"
+    type = 0                # type is used to find the correct piece in the pieces[] array
     if char in "RNBQKP":
-        color = "White_"
-        char.lower()
-    if char == "r" or char == "R":
-        type = "Rook"
-    elif char == "n" or char == "N":
-        type = "Knight"
-    elif char == "b" or char == "B":
-        type = "Bishop"
-    elif char == "q" or char == "Q":
-        type = "Queen"
-    elif char == "k" or char == "K":
-        type = "King"
-    piece_name = cf.image_dir + color + type + ".png"
-    print(char)
-    print(piece_name + " " + str(location[0]) + "," + str(location[1]))
-    piece = pygame.image.load(piece_name)
+        type += 1           # white pieces are on uneven numbers, black on even
+        char = char.lower()
+    if char == "k":
+        type += 2
+    elif char == "n":       # knight is officially referred to as 'n' in FEN since king is already 'k'
+        type += 4
+    elif char == "p":
+        type += 6
+    elif char == "q":
+        type += 8
+    elif char == "r":
+        type += 10
+    # print(char)
+    # print(piece_name + " " + str(location[0]) + "," + str(location[1]))
+    # piece_name = cf.image_dir + color + type + ".png"
+    # piece = pygame.image.load(piece_name)
+    piece = pieces[type]
     window.blit(piece, (location[0] / 8 * ww, location[1] / 8 * wh))
