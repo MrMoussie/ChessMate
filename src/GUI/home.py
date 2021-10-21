@@ -3,6 +3,7 @@
 
 import pygame, pygame_gui, board, config
 from tkinter import *
+#from SQL import Connect
 
 pygame.init()
 
@@ -10,7 +11,7 @@ pygame.display.set_caption('ChessMate')
 window_surface = pygame.display.set_mode(config.home_size, pygame.RESIZABLE)
 
 font_color = (0, 150, 250)
-font_obj = pygame.font.Font("C:\Windows\Fonts\segoeprb.ttf", 25)
+font_obj = pygame.font.Font("fonts/segoeprb.ttf", 25)
 text_obj = font_obj.render("ChessMate", True, font_color)
 
 i = 0
@@ -51,6 +52,10 @@ GoBack3 = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Re
 clock = pygame.time.Clock()
 is_running = True
 
+#Initialze connection to database and set it up
+# Connect.connect()
+# Connect.setupDB()
+
 
 def alert_popup(title, message, path):
     """Generate a pop-up window for special messages."""
@@ -84,11 +89,11 @@ while is_running:
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == Login:
-                    if Username.get_text() == "julia" and Password.get_text() == "1":
-                        # In this if statement you can add the checking with the database part (for logging in)
-                        i = 1
-                    else:
-                        alert_popup("Error", "Either your password or username is incorrect.", "Please try again.")
+                    # if (Account.login(Username.get_text(), Password.get_text())):
+                    #     i = 1
+                    # else:
+                    #     alert_popup("Error", "Either your password or username is incorrect.", "Please try again.")
+                    i = 1
                 elif event.ui_element == SignUp:
                     # In this if statement you can add the part where the new user information is stored in the database
                     # (for signing up)
@@ -101,6 +106,7 @@ while is_running:
                     # Here we should add the part of the scoreboard, not yet sure how to implement that
                     i = 4
                 elif event.ui_element == Logout:
+                    #Connect.close()
                     i = 5
                 elif event.ui_element == GoBack1 or event.ui_element == GoBack2 or event.ui_element == GoBack3:
                     i = 6
