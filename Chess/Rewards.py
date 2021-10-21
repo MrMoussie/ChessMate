@@ -33,5 +33,5 @@ def check_victims(player):
 
 
 
- #   for i in range(0,no_of_victims):
+#   for i in range(0,no_of_victims):
 #     if ((victims.get(player))[i] == "PAWN") :

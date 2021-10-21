@@ -16,6 +16,7 @@ player2 = Smart('Smart')
 #start game
 turn = 0
 print(board)
+print(board.fen())
 while not board.is_checkmate():
     player = turn % 2
     if player == 0:
@@ -30,5 +31,6 @@ while not board.is_checkmate():
         Rewards.analyzeMove(board, player, m)
         board.push(m)
         turn += 1
+    print(board.fen())
     print(board)
     ##move = ("".join(voice.getMove().split(" "))).lower()
