@@ -8,6 +8,7 @@ checks = {}
 pawns_killed = 0
 
 
+
 def analyzeMove(board, player, move):
     move = move.uci()
     src = move[0:2]
