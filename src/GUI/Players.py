@@ -1,9 +1,8 @@
 import utils
 import voice
-import chess
 
 class Player():
-    def __init__(self,name):
+    def __init__(self, name):
         self.name = name
     
     def makeMove(self, board):

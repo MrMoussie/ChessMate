@@ -1,11 +1,11 @@
 # https://pygame-gui.readthedocs.io/en/latest/quick_start.html#quick-start
 # http://bluegalaxy.info/codewalk/2017/10/14/python-how-to-create-gui-pop-up-windows-with-tkinter/
 
-import pygame, pygame_gui, board, config
+import pygame, pygame_gui, board, config,game as Game
 from tkinter import *
+import GUI.Update as Update
 
 pygame.init()
-
 pygame.display.set_caption('ChessMate')
 window_surface = pygame.display.set_mode(config.home_size, pygame.RESIZABLE)
 
@@ -72,7 +72,6 @@ def alert_popup(title, message, path):
     b.pack()
     mainloop()
 
-
 while is_running:
     window_surface.fill((255, 255, 255))
     window_surface.blit(text_obj, (330, 100))
@@ -129,7 +128,10 @@ while is_running:
         petra.update(time_delta)
         petra.draw_ui(window_surface)
     elif i == 3:
-        board.draw_board(config.START_FEN, window_surface)
+        # PLAY GAME HERE
+
+        Game.setup(window_surface, board)
+        board.draw_board(Update.getFEN(), window_surface)
         pol.update(time_delta)
         # pol.draw_ui(window_surface)
     elif i == 4:

@@ -1,4 +1,4 @@
-import Rewards
+from GUI import Rewards
 import re
 import random
 
