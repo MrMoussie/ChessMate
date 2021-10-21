@@ -1,9 +1,9 @@
 # https://pygame-gui.readthedocs.io/en/latest/quick_start.html#quick-start
 # http://bluegalaxy.info/codewalk/2017/10/14/python-how-to-create-gui-pop-up-windows-with-tkinter/
 
-import pygame, pygame_gui, board, config,game as Game
+import pygame, pygame_gui, board, config
 from tkinter import *
-import GUI.Update as Update
+from Chess import game
 
 pygame.init()
 pygame.display.set_caption('ChessMate')
@@ -130,8 +130,9 @@ while is_running:
     elif i == 3:
         # PLAY GAME HERE
 
-        Game.setup(window_surface, board)
-        board.draw_board(Update.getFEN(), window_surface)
+        game.start(window_surface)
+        # board.draw_board(Update.getFEN(), window_surface)
+
         pol.update(time_delta)
         # pol.draw_ui(window_surface)
     elif i == 4:

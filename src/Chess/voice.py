@@ -1,4 +1,4 @@
-import utils
+import src.Chess.utils as utils
 import speech_recognition as sr
 
 

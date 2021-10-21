@@ -1,4 +1,4 @@
-from GUI import Rewards
+from Chess import Rewards
 import re
 import random
 

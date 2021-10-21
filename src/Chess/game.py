@@ -1,21 +1,20 @@
 import chess
-from Players import Player
-from ComputerPlayer import Naive
-from ComputerPlayer import Smart
-import Update
-import Rewards
+import pygame.display
+
+from src.Chess.Players import Player
+from src.Chess.ComputerPlayer import Naive
+from src.Chess.ComputerPlayer import Smart
+import src.Chess.Rewards as Rewards
+import src.GUI.board as Board
 #from src.GUI import board as BOARD
-
-window = None
-
 
 # init Board
 board = chess.Board()
 
 # set Players
 player1 = Player("Joe")
-player2 = Naive('s')
-#player2 = Smart('Smart')
+# player2 = Naive('s')
+player2 = Smart('Smart')
 
 # start game
 
@@ -25,9 +24,13 @@ print(board.fen())
 screen = None
 BOARD = None
 
-def start():
+def start(window):
     turn = 0
     while not board.is_checkmate():
+        print("FEN:")
+        print(board.fen())
+        Board.draw_board(board.fen(), window)
+        pygame.display.update()
         player = turn % 2
         if player == 0:
             move = player1.makeMove(board)
@@ -42,19 +45,9 @@ def start():
             board.push(m)
             turn += 1
         #BOARD.draw_board(board.fen(), window_surface)
-        print(str(board.fen()))
+        # print(str(board.fen()))
         #Update.update(str(board.fen()))
-        BOARD.draw_board(board.fen(), window)
-        print(board)
+        # Board.draw_board(board.fen(), window)
+        # print(board)
         ##move = ("".join(voice.getMove().split(" "))).lower()
 
-
-def play(window_surface):
-    window = window_surface
-    start()
-
-def setup(window, board):
-    global screen
-    screen = window
-    global BOARD
-    BOARD = board
