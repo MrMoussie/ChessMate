@@ -15,7 +15,7 @@ def accountExists(name):
     return bool(result) if query != None else True
 
 def register(name, email, password):
-    if (Connect.connectExists() and name != None and password != None):
+    if (Connect.connectExists() and name != None and password != None and name != "" and password != ""):
         if (accountExists(name)):
             print("Error: Account already exists!")
             return False
@@ -35,9 +35,10 @@ def register(name, email, password):
     return False
 
 def login(name, password):
-    if (Connect.connectExists() and name != None and password != None):
+    if (Connect.connectExists() and name != None and password != None and name != "" and password != ""):
         if (not accountExists(name)):
             print("Error: Account does not exist!")
+            return False
         
         querySalt = "SELECT salt FROM %s.login WHERE name = '%s';" % (Connect.db, name)
         salt = Queries.getSQuery(querySalt)
