@@ -1,9 +1,8 @@
-import utils
-import voice
-import chess
+import src.Chess.utils as utils
+import src.Chess.voice as voice
 
 class Player():
-    def __init__(self,name):
+    def __init__(self, name):
         self.name = name
     
     def makeMove(self, board):

@@ -48,9 +48,9 @@ def getNormalCommand(move):
     elif len(move) == 5:
         move = move.replace(' ','')
         toReturn = ''
-        if move[1].isalnum() and move[3].isalnum():
-            print('fefefghfhgvjhgfhn')
-            if move[1] in horizontal and move[3] in horizontal:
-                if move[0] in vertical and move[2] in vertical:
-                    return move[0] + 'ddd ' + move[1] + ' ' + move[2] + 'dd ' + move[3]
-        return toReturn
+        if len(move)==4:
+            if move[1].isalnum() and move[3].isalnum():
+                if move[1] in horizontal and move[3] in horizontal:
+                    if move[0] in vertical and move[2] in vertical:
+                        return move[0] + 'ddd ' + move[1] + ' ' + move[2] + 'dd ' + move[3]
+            return toReturn

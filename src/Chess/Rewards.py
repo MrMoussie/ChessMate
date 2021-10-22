@@ -1,4 +1,5 @@
 import chess
+#import Missions
 
 dic = {'p': 'PAWN', 'n': 'KNIGHT',
        'k': 'KING', 'q': 'QUEEN',
@@ -6,7 +7,7 @@ dic = {'p': 'PAWN', 'n': 'KNIGHT',
 victims = {0: [], 1: []}
 checks = {}
 pawns_killed = 0
-
+killvic_pairs = [('p', 'p'), ('b', 'p'), ('r', 'p'), ('q', 'p'), ('n', 'p'), ('k', 'p'), ('p', 'p'), ('q', 'n'), ('q', 'q'), ('n', 'n'), ('n', 'q'), ('r', 'r'), ('b', 'b')]
 
 
 def analyzeMove(board, player, move):
@@ -23,13 +24,22 @@ def analyzeMove(board, player, move):
     if (victim is not None):
         victims.get(player).append(dic.get(str(victim).lower()))
         #check_victims(player)
+        check_kill_vic_pairs(killer, victim)
     print(victims)
     return victim
 def check_victims(player):
 #print(no_of_victims)
     pawns_killed = (victims.get(player)).count("PAWN")
     print(pawns_killed)
-    
+
+def check_kill_vic_pairs(killer, victim):
+    if killvic_pairs.__contains__((killer, victim)):
+        KILLER = dic.get(str(killer).lower())
+        VICTIM = dic.get(str(victim).lower())
+        #easy = Missions.get_easy_mission()
+        easy = "kill a pawn using a pawn"
+        if KILLER.lower() in easy and VICTIM.lower() in easy:
+            print("Mission accomplished - %s" % easy)
 
 
 
