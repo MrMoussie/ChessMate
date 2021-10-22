@@ -1,9 +1,13 @@
 # https://pygame-gui.readthedocs.io/en/latest/quick_start.html#quick-start
 # http://bluegalaxy.info/codewalk/2017/10/14/python-how-to-create-gui-pop-up-windows-with-tkinter/
 
-import pygame, pygame_gui, board, config
+import pygame, pygame_gui, board, config, sys
 from tkinter import *
-#from SQL import Connect
+
+sys.path.append("../SQL")
+import Connect, Account
+import atexit
+from time import sleep
 
 pygame.init()
 
@@ -24,6 +28,7 @@ daan = pygame_gui.UIManager(config.home_size)
 
 ButtonLayoutRectL = pygame.Rect(340, 350, 100, 30)
 ButtonLayoutRectS = pygame.Rect(340, 400, 100, 30)
+ButtonLayoutRectT = pygame.Rect(340, 450, 100, 30)
 ButtonLayoutRectU = pygame.Rect(340, 450, 100, 30)
 EntryLayoutRectU = pygame.Rect(250, 200, 300, 40)
 EntryLayoutRectP = pygame.Rect(250, 300, 300, 40)
@@ -31,6 +36,7 @@ EntryLayoutRectR = pygame.Rect(250, 150, 300, 40)
 
 Login = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectL, text='Login', manager=manager)
 SignUp = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Sign up', manager=manager)
+Quit = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectT, text='Quit', manager=manager)
 Username = pygame_gui.elements.UITextEntryLine(relative_rect=EntryLayoutRectU, manager=manager)
 Password = pygame_gui.elements.UITextEntryLine(relative_rect=EntryLayoutRectP, manager=manager)
 
@@ -39,9 +45,8 @@ ScoreBoard = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text=
 Logout = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Logout', manager=bob)
 
 SignUpScreen = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Sign up', manager=petra)
-FullName = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 150, 300, 40), manager=petra)
-EmailAddress = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 200, 300, 40), manager=petra)
-UsernameEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 250, 300, 40), manager=petra)
+UsernameEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 200, 300, 40), manager=petra)
+EmailAddress = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 250, 300, 40), manager=petra)
 PasswordEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 300, 300, 40), manager=petra)
 PasswordEntryRepeat = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 350, 300, 40), manager=petra)
 
@@ -53,8 +58,13 @@ clock = pygame.time.Clock()
 is_running = True
 
 #Initialze connection to database and set it up
-# Connect.connect()
-# Connect.setupDB()
+Connect.connect()
+Connect.setupDB()
+
+if (not Connect.connectExists):
+    alert_popup("Error", "Program can not connect to SQL with given credentials!", "Please refer to the README in the SQL folder.")
+    sleep(5)
+    is_running = False
 
 
 def alert_popup(title, message, path):
@@ -89,14 +99,11 @@ while is_running:
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == Login:
-                    # if (Account.login(Username.get_text(), Password.get_text())):
-                    #     i = 1
-                    # else:
-                    #     alert_popup("Error", "Either your password or username is incorrect.", "Please try again.")
-                    i = 1
+                    if (Account.login(Username.get_text(), Password.get_text())):
+                        i = 1
+                    else:
+                        alert_popup("Error", "Either your password or username is incorrect.", "Please try again.")
                 elif event.ui_element == SignUp:
-                    # In this if statement you can add the part where the new user information is stored in the database
-                    # (for signing up)
                     i = 2
                 elif event.ui_element == PlayGame:
                     window_surface = pygame.display.set_mode((config.bg.get_width(), config.bg.get_height()), pygame.RESIZABLE)
@@ -106,10 +113,13 @@ while is_running:
                     # Here we should add the part of the scoreboard, not yet sure how to implement that
                     i = 4
                 elif event.ui_element == Logout:
-                    #Connect.close()
                     i = 5
                 elif event.ui_element == GoBack1 or event.ui_element == GoBack2 or event.ui_element == GoBack3:
                     i = 6
+                elif event.ui_element == SignUpScreen:
+                    i = 7
+                elif event.ui_element == Quit:
+                    is_running = False
 
         if i == 0:
             manager.process_events(event)
@@ -125,6 +135,8 @@ while is_running:
             manager.process_events(event)
         elif i == 6:
             manager.process_events(event)
+        elif i == 7:
+            bob.process_events(event)
     if i == 0:
         manager.update(time_delta)
         manager.draw_ui(window_surface)
@@ -134,6 +146,7 @@ while is_running:
     elif i == 2:
         petra.update(time_delta)
         petra.draw_ui(window_surface)
+        
     elif i == 3:
         board.draw_board(config.START_FEN, window_surface)
         pol.update(time_delta)
@@ -147,9 +160,25 @@ while is_running:
     elif i == 6:
         manager.update(time_delta)
         manager.draw_ui(window_surface)
+    elif i == 7:
+        bob.update(time_delta)
+        bob.draw_ui(window_surface)
+
+        i = 2
+
+        if (not PasswordEntry.get_text() == PasswordEntryRepeat.get_text()):
+            alert_popup("Error", "The two passwords do not match each other!", "Please try again.")
+        elif (Account.accountExists(UsernameEntry.get_text())):
+            alert_popup("Error", "This user already exists!", "Please try again.")
+        elif (Account.register(UsernameEntry.get_text(), EmailAddress.get_text(), PasswordEntry.get_text())):
+            i = 1
+        else:
+            alert_popup("Error", "Fill in the fields correctly.", "Please try again.")
 
     # window_surface.blit(background, (0, 0))
     # manager.draw_ui(window_surface)
     # bob.draw_ui(window_surface)
 
     pygame.display.update()
+
+atexit.register(Connect.close)

@@ -1,7 +1,7 @@
 import mysql.connector
 import configparser
 
-configFile = "SQL.cfg"
+configFile = "../SQL/SQL.cfg"
 missionFiles = ["easy_missions.txt", "medium_missions.txt", "hard_missions.txt", "expert_missions.txt"]
 
 db = ""
@@ -73,7 +73,7 @@ def setupMissions():
     mycursor = sql.cursor()
 
     for i in range(len(missionFiles)):
-        with open("missions/" + missionFiles[i]) as file:
+        with open("../SQL/missions/" + missionFiles[i]) as file:
             fileName = missionFiles[i].split(".")[0]
             mycursor.execute("SELECT COUNT(*) FROM %s;" % fileName)
             count = mycursor.fetchone()
