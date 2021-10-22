@@ -24,6 +24,7 @@ print(board.fen())
 screen = None
 BOARD = None
 
+
 def start(window):
     turn = 0
     while not board.is_checkmate():
@@ -45,10 +46,10 @@ def start(window):
             Rewards.analyzeMove(board, player, m)
             board.push(m)
             turn += 1
-        #BOARD.draw_board(board.fen(), window_surface)
+        # BOARD.draw_board(board.fen(), window_surface)
         # print(str(board.fen()))
-        #Update.update(str(board.fen()))
+        # Update.update(str(board.fen()))
         # Board.draw_board(board.fen(), window)
         # print(board)
-        ##move = ("".join(voice.getMove().split(" "))).lower()
+        # move = ("".join(voice.getMove().split(" "))).lower()
 
