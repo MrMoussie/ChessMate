@@ -3,6 +3,7 @@
 
 import pygame, pygame_gui, board, config, sys
 from tkinter import *
+from src.Chess import game
 
 sys.path.append("../SQL")
 import Connect, Account
@@ -10,7 +11,6 @@ import atexit
 from time import sleep
 
 pygame.init()
-
 pygame.display.set_caption('ChessMate')
 window_surface = pygame.display.set_mode(config.home_size, pygame.RESIZABLE)
 
@@ -39,6 +39,8 @@ SignUp = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Sig
 Quit = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectT, text='Quit', manager=manager)
 Username = pygame_gui.elements.UITextEntryLine(relative_rect=EntryLayoutRectU, manager=manager)
 Password = pygame_gui.elements.UITextEntryLine(relative_rect=EntryLayoutRectP, manager=manager)
+Username.set_text("Username")
+Password.set_text("Password")
 
 PlayGame = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectL, text='Play game', manager=bob)
 ScoreBoard = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Score board', manager=bob)
@@ -47,8 +49,14 @@ Logout = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Log
 SignUpScreen = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Sign up', manager=petra)
 UsernameEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 200, 300, 40), manager=petra)
 EmailAddress = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 250, 300, 40), manager=petra)
+EmailAddress = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 200, 300, 40), manager=petra)
+UsernameEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 250, 300, 40), manager=petra)
 PasswordEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 300, 300, 40), manager=petra)
 PasswordEntryRepeat = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 350, 300, 40), manager=petra)
+EmailAddress.set_text("Email address")
+UsernameEntry.set_text("Username")
+PasswordEntry.set_text("Password")
+PasswordEntryRepeat.set_text("Repeat password")
 
 GoBack1 = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Return', manager=petra)
 GoBack2 = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Return', manager=pol)
@@ -86,7 +94,6 @@ def alert_popup(title, message, path):
     b = Button(root, text="OK", command=root.destroy, width=10)
     b.pack()
     mainloop()
-
 
 while is_running:
     window_surface.fill((255, 255, 255))
@@ -146,9 +153,12 @@ while is_running:
     elif i == 2:
         petra.update(time_delta)
         petra.draw_ui(window_surface)
-        
+
     elif i == 3:
-        board.draw_board(config.START_FEN, window_surface)
+        # PLAY GAME HERE
+        game.start(window_surface)
+        # board.draw_board(Update.getFEN(), window_surface)
+
         pol.update(time_delta)
         # pol.draw_ui(window_surface)
     elif i == 4:
