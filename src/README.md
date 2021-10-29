@@ -35,6 +35,7 @@ Install PyAudio:
 ```bash
 sudo pip3 install pyaudio
 ```
+
 ```diff
 -*In case of errors with PyAudio installation:*
 ```
