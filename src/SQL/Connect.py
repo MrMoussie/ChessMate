@@ -11,8 +11,6 @@ def getSQL():
     return sql
 
 def connectExists():
-    global sql
-
     return sql != None and sql.cursor() != None
 
 #Connects to SQL database with credentials of the configuration file.

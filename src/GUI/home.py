@@ -3,7 +3,9 @@
 
 import pygame, pygame_gui, board, config, sys
 from tkinter import *
-from src.Chess import game
+
+sys.path.append("../Chess")
+import game
 
 sys.path.append("../SQL")
 import Connect, Account
@@ -67,11 +69,6 @@ is_running = True
 Connect.connect()
 Connect.setupDB()
 
-if (not Connect.connectExists):
-    alert_popup("Error", "Program can not connect to SQL with given credentials!", "Please refer to the README in the SQL folder.")
-    sleep(5)
-    is_running = False
-
 
 def alert_popup(title, message, path):
     """Generate a pop-up window for special messages."""
@@ -92,6 +89,11 @@ def alert_popup(title, message, path):
     b = Button(root, text="OK", command=root.destroy, width=10)
     b.pack()
     mainloop()
+
+#Check if connection is valid to the database
+if (not Connect.connectExists()):
+    alert_popup("Error", "Program can not connect to SQL with given credentials!", "Please refer to the README file to setup a database.")
+    is_running = False
 
 while is_running:
     window_surface.fill((255, 255, 255))
@@ -119,8 +121,10 @@ while is_running:
                     i = 4
                 elif event.ui_element == Logout:
                     i = 5
-                elif event.ui_element == GoBack1 or event.ui_element == GoBack2 or event.ui_element == GoBack3:
+                elif event.ui_element == GoBack1 or event.ui_element == GoBack2:
                     i = 6
+                elif event.ui_element == GoBack3:
+                    i = 1
                 elif event.ui_element == SignUpScreen:
                     i = 7
                 elif event.ui_element == Quit:

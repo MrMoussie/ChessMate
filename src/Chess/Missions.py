@@ -1,5 +1,7 @@
-import random
-from src.SQL import Queries
+import random, sys
+
+sys.path.append("../SQL")
+import Queries
 
 
 def current_mission_set():

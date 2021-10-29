@@ -1,5 +1,5 @@
-import src.Chess.utils as utils
-import src.Chess.voice as voice
+import utils
+import voice
 
 class Player():
     def __init__(self, name):

@@ -1,11 +1,14 @@
 import chess
 import pygame.display
+import sys
 
-from src.Chess.Players import Player
-from src.Chess.ComputerPlayer import Naive
-from src.Chess.ComputerPlayer import Smart
-import src.Chess.Rewards as Rewards
-import src.GUI.board as Board
+from Players import Player
+from ComputerPlayer import Naive
+from ComputerPlayer import Smart
+import Rewards
+
+sys.path.append("../GUI")
+import board as Board
 import time
 
 # init Board

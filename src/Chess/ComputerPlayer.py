@@ -1,4 +1,4 @@
-from src.Chess import Rewards
+import Rewards
 import re
 import random
 
