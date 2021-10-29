@@ -35,8 +35,9 @@ Install PyAudio:
 ```bash
 sudo pip3 install pyaudio
 ```
-
-*In case of errors with PyAudio installation:*
+```diff
+-*In case of errors with PyAudio installation:*
+```
 ```bash
 sudo apt install portaudio19-dev python3-pyaudio
 ```
