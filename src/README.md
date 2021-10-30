@@ -5,6 +5,7 @@ This is a step-by-step instruction to install the necessary modules to run the g
 
 ## Installation 
 Use the following commands on your Raspberry Pi to install the necessary modules:
+
 *In case a command does not work for you, try updating your Raspberry Pi first.*
 
 Install PyGame:
