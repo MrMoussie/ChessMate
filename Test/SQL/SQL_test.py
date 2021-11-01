@@ -22,7 +22,24 @@ class TestAccount(unittest.TestCase):
     def test_salt(self):
         self.assertNotEqual(Account.generateSalt(), None)
     
-    def test_hash(self):
+    def test_hash_init(self):
         password = salt = "1234"
         self.assertNotEqual(Account.hash(password, salt), None)
         self.assertTrue(password not in Account.hash(password, salt))
+
+# QUERIES
+class TestQueries(unittest.TestCase):
+    def test_getSQuery_init(self):
+        self.assertEqual(Queries.getSQuery(None, None), None)
+        self.assertEqual(Queries.getSQuery("", None), None)
+        self.assertEqual(Queries.getSQuery("DO", None), None)
+
+    def test_doQuery_init(self):
+        self.assertFalse(Queries.doQuery(None, None))
+        self.assertFalse(Queries.doQuery("", None))
+        self.assertFalse(Queries.doQuery("DO", None))
+
+    def test_SQL(self):
+        Connect.connect()
+
+        # TO DO

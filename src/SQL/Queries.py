@@ -5,7 +5,7 @@ import Connect
 #Uses prepare statements, if not needed pass None in tuple.
 def getSQuery(query, value):
     try:
-        if (Connect.connectExists()):
+        if (Connect.connectExists() and query != None and query != ""):
             sql = Connect.getSQL()
             mycursor = sql.cursor(prepared=True)
 
@@ -18,6 +18,8 @@ def getSQuery(query, value):
 
             if (result != None):
                 return result[0]
+        else:
+            return None
     except Exception as e:
         print(e)
     
@@ -26,7 +28,7 @@ def getSQuery(query, value):
 #Prepared statement
 def doQuery(query, tuple):
     try:
-        if (Connect.connectExists()):
+        if (Connect.connectExists() and query != None and query != ""):
             sql = Connect.getSQL()
             mycursor = sql.cursor(prepared=True)
 
@@ -34,6 +36,8 @@ def doQuery(query, tuple):
             sql.commit()
 
             return True
+        else:
+            return False
     except Exception as e:
         print(e)
 
