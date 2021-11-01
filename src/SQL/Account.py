@@ -23,8 +23,9 @@ def register(name, email, password):
         salt = generateSalt()
         hashedPass = hash(password, salt)
 
-        query = "INSERT INTO %s.login VALUES ('%s', '%s', '%s', '%s');" % (Connect.db, name, email, hashedPass, salt)
-        result = Queries.doQuery(query)
+        query = "INSERT INTO {0}.login VALUES (%s, %s, %s, %s);".format(Connect.db)
+        tuple = (name, email, hashedPass, salt)
+        result = Queries.doQuery(query, tuple)
 
         if (not result):
             print("Error: could not insert into table!")
@@ -34,10 +35,10 @@ def register(name, email, password):
     
     return False
 
+#Returns True if credentials are correct, False for otherwise as well as errors
 def login(name, password):
     if (Connect.connectExists() and name != None and password != None and name != "" and password != ""):
         if (not accountExists(name)):
-            print("Error: Account does not exist!")
             return False
         
         querySalt = "SELECT salt FROM %s.login WHERE name = '%s';" % (Connect.db, name)

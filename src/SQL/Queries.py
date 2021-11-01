@@ -18,13 +18,14 @@ def getSQuery(query):
     
     return None
 
-def doQuery(query):
+#Prepared statement
+def doQuery(query, tuple):
     try:
         if (Connect.connectExists()):
             sql = Connect.getSQL()
-            mycursor = sql.cursor()
-            mycursor.execute(query)
+            mycursor = sql.cursor(prepared=True)
 
+            mycursor.execute(query, tuple)
             sql.commit()
 
             return True
