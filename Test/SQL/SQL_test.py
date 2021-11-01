@@ -17,7 +17,6 @@ class TestConnect(unittest.TestCase):
         self.assertFalse(Connect.connectExists())
         self.assertEqual(Connect.getSQL(), None)
 
-
 # ACCOUNT
 class TestAccount(unittest.TestCase):
     def test_salt(self):

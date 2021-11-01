@@ -1,7 +1,7 @@
-import mysql.connector
+import os, mysql.connector
 import configparser
 
-configFile = "../SQL/SQL.cfg"
+configFile = os.path.dirname(os.path.abspath(__file__)) + "/SQL.cfg"
 missionFiles = ["easy_missions.txt", "medium_missions.txt", "hard_missions.txt", "expert_missions.txt"]
 
 db = ""
@@ -44,6 +44,7 @@ def close():
     if (connectExists()):
         sql.cursor().close()
         sql.close()
+        sql = None
         print("SQL: Connection closed!")
 
 #Create database and table in case it does not already exist
