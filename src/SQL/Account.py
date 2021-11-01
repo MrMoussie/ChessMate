@@ -9,14 +9,27 @@ def hash(password, salt):
 
 #Check if account already exists
 def accountExists(name):
-    query = "SELECT COUNT(*) FROM %s.login WHERE name = '%s';" % (Connect.db, name)
-    result = Queries.getSQuery(query)
+    if (name == None or name == ""):
+        return True
+    query = "SELECT COUNT(*) FROM {0}.login WHERE name = %s;".format(Connect.db)
+    result = Queries.getSQuery(query, name)
 
     return bool(result) if query != None else True
 
+#Check if email already exists
+def emailExists(email):
+    if (email == None or email == ""):
+        return True
+
+    query = "SELECT COUNT(*) FROM {0}.login WHERE email = %s;".format(Connect.db)
+    result = Queries.getSQuery(query, email)
+
+    return bool(result) if query != None else True
+
+#Insert account into database after validation
 def register(name, email, password):
-    if (Connect.connectExists() and name != None and password != None and name != "" and password != ""):
-        if (accountExists(name)):
+    if (Connect.connectExists() and name != None and email != None and password != None and name != "" and email != "" and password != ""):
+        if (accountExists(name) or emailExists(email)):
             print("Error: Account already exists!")
             return False
 
@@ -41,10 +54,10 @@ def login(name, password):
         if (not accountExists(name)):
             return False
         
-        querySalt = "SELECT salt FROM %s.login WHERE name = '%s';" % (Connect.db, name)
-        salt = Queries.getSQuery(querySalt)
-        queryPass = "SELECT hash FROM %s.login WHERE name = '%s';" % (Connect.db, name)
-        hashedPass = Queries.getSQuery(queryPass)
+        querySalt = "SELECT salt FROM {0}.login WHERE name = %s;".format(Connect.db)
+        salt = Queries.getSQuery(querySalt, name).decode('utf-8')
+        queryPass = "SELECT hash FROM {0}.login WHERE name = %s;".format(Connect.db)
+        hashedPass = Queries.getSQuery(queryPass, name).decode('utf-8')
 
         return True if hashedPass == hash(password, salt) else False
         

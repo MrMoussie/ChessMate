@@ -2,12 +2,17 @@ import Connect
 
 #Returns 1 single value in the table (i.e.: query[0] == "Value")
 #Return None if no results
-def getSQuery(query):
+#Uses prepare statements, if not needed pass None in tuple.
+def getSQuery(query, value):
     try:
         if (Connect.connectExists()):
             sql = Connect.getSQL()
-            mycursor = sql.cursor()
-            mycursor.execute(query)
+            mycursor = sql.cursor(prepared=True)
+
+            if (value != None):
+                mycursor.execute(query, (value, ))
+            else:
+                mycursor.execute(query)
 
             result = mycursor.fetchone()
 

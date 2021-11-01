@@ -50,10 +50,10 @@ Logout = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Log
 
 SignUpScreen = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Sign up', manager=petra)
 UsernameEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 200, 300, 40), manager=petra)
-EmailAddress = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 250, 300, 40), manager=petra)
+EmailAddressEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 250, 300, 40), manager=petra)
 PasswordEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 300, 300, 40), manager=petra)
 PasswordEntryRepeat = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 350, 300, 40), manager=petra)
-EmailAddress.set_text("Email address")
+EmailAddressEntry.set_text("Email address")
 UsernameEntry.set_text("Username")
 PasswordEntry.set_text("Password")
 PasswordEntryRepeat.set_text("Repeat password")
@@ -182,7 +182,9 @@ while is_running:
             alert_popup("Error", "The two passwords do not match each other!", "Please try again.")
         elif (Account.accountExists(UsernameEntry.get_text())):
             alert_popup("Error", "This user already exists!", "Please try again.")
-        elif (Account.register(UsernameEntry.get_text(), EmailAddress.get_text(), PasswordEntry.get_text())):
+        elif (Account.emailExists(EmailAddressEntry.get_text())):
+            alert_popup("Error", "This email is already taken!", "Please try again.")
+        elif (Account.register(UsernameEntry.get_text(), EmailAddressEntry.get_text(), PasswordEntry.get_text())):
             i = 1
         else:
             alert_popup("Error", "Fill in the fields correctly.", "Please try again.")

@@ -56,7 +56,7 @@ def setupDB():
         mycursor.execute("USE %s" % db)
         
         mycursor.execute('CREATE TABLE IF NOT EXISTS login (%s, %s, %s, %s)' % 
-            ("name VARCHAR(25) PRIMARY KEY", "email VARCHAR(255)", "hash VARCHAR(255) NOT NULL", "salt VARCHAR(255) NOT NULL"))
+            ("name VARCHAR(25) PRIMARY KEY", "email VARCHAR(255) UNIQUE", "hash VARCHAR(255) NOT NULL", "salt VARCHAR(255) NOT NULL"))
 
         for i in range(len(missionFiles)):
             mycursor.execute('CREATE TABLE IF NOT EXISTS %s (%s, %s)' %
