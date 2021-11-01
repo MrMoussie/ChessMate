@@ -3,6 +3,7 @@
 
 import pygame, pygame_gui, board, config, sys
 from tkinter import *
+from threading import Thread
 
 sys.path.append("../Chess")
 import game
@@ -90,6 +91,18 @@ def alert_popup(title, message, path):
     b.pack()
     mainloop()
 
+## Can be used as an alternative thread checking for exit events while game is running.
+# def checkForExit():
+#     try:
+#         while is_running:
+#             for event in pygame.event.get():
+#                 if event.type == pygame.QUIT:
+#                     is_running = False
+#         pygame.quit()
+#     except SystemExit:
+#         is_running = False
+#         pygame.quit()
+
 #Check if connection is valid to the database
 if (not Connect.connectExists()):
     alert_popup("Error", "Program can not connect to SQL with given credentials!", "Please refer to the README file to setup a database.")
@@ -99,6 +112,7 @@ while is_running:
     window_surface.fill((255, 255, 255))
     window_surface.blit(text_obj, (330, 100))
     time_delta = clock.tick(60)/1000.0
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             is_running = False
