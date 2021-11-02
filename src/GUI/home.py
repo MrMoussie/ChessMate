@@ -28,6 +28,7 @@ bob = pygame_gui.UIManager(config.home_size)
 petra = pygame_gui.UIManager(config.home_size)
 pol = pygame_gui.UIManager(config.home_size)
 daan = pygame_gui.UIManager(config.home_size)
+players = pygame_gui.UIManager(config.home_size)
 
 ButtonLayoutRectL = pygame.Rect(340, 350, 100, 30)
 ButtonLayoutRectS = pygame.Rect(340, 400, 100, 30)
@@ -49,6 +50,12 @@ PlayGame = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectL, text='P
 ScoreBoard = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Score board', manager=bob)
 Logout = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Logout', manager=bob)
 
+# Setting players
+Player = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectL, text='Friend', manager=players)
+Naive = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='AI level 1', manager=players)
+Smart = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='AI level 2', manager=players)
+PlayerNum = 0;
+
 SignUpScreen = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Sign up', manager=petra)
 UsernameEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 200, 300, 40), manager=petra)
 EmailAddressEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 250, 300, 40), manager=petra)
@@ -66,7 +73,7 @@ GoBack3 = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Re
 clock = pygame.time.Clock()
 is_running = True
 
-#Initialze connection to database and set it up
+# Initialize connection to database and set it up
 Connect.connect()
 Connect.setupDB()
 
@@ -75,12 +82,12 @@ def alert_popup(title, message, path):
     """Generate a pop-up window for special messages."""
     root = Tk()
     root.title(title)
-    w = 400     # popup window width
-    h = 200     # popup window height
+    w = 400  # popup window width
+    h = 200  # popup window height
     sw = root.winfo_screenwidth()
     sh = root.winfo_screenheight()
-    x = (sw - w)/2
-    y = (sh - h)/2
+    x = (sw - w) / 2
+    y = (sh - h) / 2
     root.geometry('%dx%d+%d+%d' % (w, h, x, y))
     m = message
     m += '\n'
@@ -108,10 +115,17 @@ if (not Connect.connectExists()):
     alert_popup("Error", "Program can not connect to SQL with given credentials!", "Please refer to the README file to setup a database.")
     is_running = False
 
+
+if (not Connect.connectExists):
+    alert_popup("Error", "Program can not connect to SQL with given credentials!",
+                "Please refer to the README in the SQL folder.")
+    sleep(5)
+    is_running = False
+
 while is_running:
     window_surface.fill((255, 255, 255))
     window_surface.blit(text_obj, (330, 100))
-    time_delta = clock.tick(60)/1000.0
+    time_delta = clock.tick(60) / 1000.0
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -127,7 +141,6 @@ while is_running:
                 elif event.ui_element == SignUp:
                     i = 2
                 elif event.ui_element == PlayGame:
-                    window_surface = pygame.display.set_mode((config.bg.get_width(), config.bg.get_height()), pygame.RESIZABLE)
                     # In this if statement you should call on the game (make the game a separate class)
                     i = 3
                 elif event.ui_element == ScoreBoard:
@@ -141,6 +154,24 @@ while is_running:
                     i = 1
                 elif event.ui_element == SignUpScreen:
                     i = 7
+                ############################################################################
+                #############################CHOOSING PLAYERS###############################
+                ############################################################################
+                elif event.ui_element == Player:
+                    window_surface = pygame.display.set_mode((config.bg.get_width(), config.bg.get_height()),
+                                                             pygame.RESIZABLE)
+                    i = 8
+                    PlayerNum = 0
+                elif event.ui_element == Naive:
+                    window_surface = pygame.display.set_mode((config.bg.get_width(), config.bg.get_height()),
+                                                             pygame.RESIZABLE)
+                    i = 9
+                    PlayerNum = 1
+                elif event.ui_element == Smart:
+                    window_surface = pygame.display.set_mode((config.bg.get_width(), config.bg.get_height()),
+                                                             pygame.RESIZABLE)
+                    i = 10
+                    PlayerNum = 2
                 elif event.ui_element == Quit:
                     is_running = False
 
@@ -151,7 +182,7 @@ while is_running:
         elif i == 2:
             petra.process_events(event)
         elif i == 3:
-            pol.process_events(event)
+            players.process_events(event)
         elif i == 4:
             daan.process_events(event)
         elif i == 5:
@@ -160,6 +191,8 @@ while is_running:
             manager.process_events(event)
         elif i == 7:
             bob.process_events(event)
+        elif i == 8 or i == 9 or i == 10:
+            pol.process_events(event)
     if i == 0:
         manager.update(time_delta)
         manager.draw_ui(window_surface)
@@ -171,11 +204,10 @@ while is_running:
         petra.draw_ui(window_surface)
 
     elif i == 3:
+        players.update(time_delta)
+        players.draw_ui(window_surface)
         # PLAY GAME HERE
-        game.start(window_surface)
-        # board.draw_board(Update.getFEN(), window_surface)
 
-        pol.update(time_delta)
         # pol.draw_ui(window_surface)
     elif i == 4:
         daan.update(time_delta)
@@ -191,6 +223,9 @@ while is_running:
         bob.draw_ui(window_surface)
 
         i = 2
+    elif i == 8 or i == 9 or i == 10:
+        game.start(window_surface, PlayerNum)
+        pol.update(time_delta)
 
         if (not PasswordEntry.get_text() == PasswordEntryRepeat.get_text()):
             alert_popup("Error", "The two passwords do not match each other!", "Please try again.")
