@@ -65,6 +65,15 @@ def setupDB():
         
         setupMissions()
 
+#Delete database
+def dropDB():
+    global sql
+
+    if connectExists():
+        mycursor = sql.cursor()
+        mycursor.execute("DROP DATABASE {0};".format(db))
+        sql.commit()
+
 #Setup mission tables in database
 def setupMissions():
     global sql
@@ -72,7 +81,7 @@ def setupMissions():
     mycursor = sql.cursor()
 
     for i in range(len(missionFiles)):
-        with open("../SQL/missions/" + missionFiles[i]) as file:
+        with open(os.path.dirname(os.path.abspath(__file__)) + "/missions/" + missionFiles[i]) as file:
             fileName = missionFiles[i].split(".")[0]
             mycursor.execute("SELECT COUNT(*) FROM %s;" % fileName)
             count = mycursor.fetchone()

@@ -2,7 +2,7 @@ import Connect
 
 #Returns 1 single value in the table (i.e.: query[0] == "Value")
 #Return None if no results
-#Uses prepare statements, if not needed pass None in tuple.
+#Uses prepare statements, if not needed pass None in value.
 def getSQuery(query, value):
     try:
         if (Connect.connectExists() and query != None and query != ""):
@@ -18,8 +18,6 @@ def getSQuery(query, value):
 
             if (result != None):
                 return result[0]
-        else:
-            return None
     except Exception as e:
         print(e)
     
