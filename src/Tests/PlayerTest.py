@@ -1,9 +1,10 @@
-import unittest
+import unittest, sys
 
 import chess
 
-import src.Chess.Players as Player
-import src.Chess.ComputerPlayer as AI
+sys.path.append("../Chess")
+import Players as Player
+import ComputerPlayer as AI
 
 
 class PlayerTestCase(unittest.TestCase):
