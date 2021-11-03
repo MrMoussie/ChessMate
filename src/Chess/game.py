@@ -1,6 +1,7 @@
 import chess
 import pygame.display
 import sys
+import Missions
 
 from Players import Player
 from ComputerPlayer import Naive
@@ -8,19 +9,19 @@ from ComputerPlayer import Smart
 import Rewards
 
 sys.path.append("../GUI")
-import board as Board
+#import board as Board
 import time
 
 # init Board
 board = chess.Board()
 
 # set Players
-player1 = Player("Joe")
+player1 = Player()
 # player2 = Naive('s')
-player2 = Smart('Smart')
+PLAYERS = [Player(), Naive(), Smart()]
 
 # start game
-
+Missions.current_mission_set()
 print(board)
 print(board.fen())
 
@@ -28,13 +29,14 @@ screen = None
 BOARD = None
 
 
-def start(window):
+def start(window,playerId):
     turn = 0
+    player2 = PLAYERS[playerId]
     while not board.is_checkmate():
         print("FEN:")
         print(board.fen())
-        Board.draw_board(board.fen(), window)
-        pygame.display.update()
+        #Board.draw_board(board.fen(), window)
+        #pygame.display.update()
         time.sleep(2)
         player = turn % 2
         if player == 0:
@@ -53,6 +55,7 @@ def start(window):
         # print(str(board.fen()))
         # Update.update(str(board.fen()))
         # Board.draw_board(board.fen(), window)
-        # print(board)
+        print(board)
         # move = ("".join(voice.getMove().split(" "))).lower()
 
+start(screen,1)

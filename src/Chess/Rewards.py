@@ -1,5 +1,5 @@
 import chess
-#import Missions
+import Missions
 
 dic = {'p': 'PAWN', 'n': 'KNIGHT',
        'k': 'KING', 'q': 'QUEEN',
@@ -24,7 +24,8 @@ def analyzeMove(board, player, move):
     if (victim is not None):
         victims.get(player).append(dic.get(str(victim).lower()))
         #check_victims(player)
-        check_kill_vic_pairs(killer, victim)
+        if killvic_pairs.__contains__((str(killer).lower(), str(victim).lower())):
+            check_kill_vic_pairs(str(killer), str(victim))
     print(victims)
     return victim
 
@@ -34,13 +35,21 @@ def check_victims(player):
     print(pawns_killed)
 
 def check_kill_vic_pairs(killer, victim):
-    if killvic_pairs.__contains__((killer, victim)):
         KILLER = dic.get(str(killer).lower())
         VICTIM = dic.get(str(victim).lower())
-        #easy = Missions.get_easy_mission()
-        easy = "kill a pawn using a pawn"
+        easy = Missions.get_easy_mission()
+        #medium = Missions.get_medium_mission()
+        #hard = Missions.get_hard_mission()
+        #expert = Missions.get_expert_mission()
         if KILLER.lower() in easy and VICTIM.lower() in easy:
             print("Mission accomplished - %s" % easy)
+            #return easy                                                   Note - add the samne in the every step of if-else ladder and uncomment when database is conencted
+        #elif KILLER.lower() in medium and VICTIM.lower() in medium:             Uncomment once databas is connected
+        #    print("Mission accomplished - %s" % medium)
+        #elif KILLER.lower() in hard and VICTIM.lower() in hard:
+         #   print("Mission accomplished - %s" % hard)
+        #elif KILLER.lower() in expert and VICTIM.lower() in expert:
+         #   print("Mission accomplished - %s" % expert)
 
 
 

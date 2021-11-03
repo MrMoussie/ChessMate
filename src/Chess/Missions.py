@@ -5,14 +5,14 @@ import Queries
 
 
 def current_mission_set():
-    get_easy_mission()
-    get_medium_mission()
-    get_hard_mission()
-    get_expert_mission()
+    print("%s" % get_easy_mission())
+   # print("/n%s" % get_medium_mission())            Uncomment once data base is connected
+   # print("/n%s" % get_hard_mission())
+   # print("/n%s" % get_expert_mission())
 
 
 def get_easy_mission():
-    id = random(10) + 1
+   # id = random(10) + 1                 uncomment once database is connected
     query = ("SELECT description FROM easy_missions WHERE id = %d", id)
     description = Queries.getSQuery(query, None)
     print(description)
