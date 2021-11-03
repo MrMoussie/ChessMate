@@ -54,7 +54,7 @@ Logout = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Log
 Player = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectL, text='Friend', manager=players)
 Naive = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='AI level 1', manager=players)
 Smart = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='AI level 2', manager=players)
-PlayerNum = 0;
+PlayerNum = 0
 
 SignUpScreen = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Sign up', manager=petra)
 UsernameEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 200, 300, 40), manager=petra)
@@ -222,11 +222,6 @@ while is_running:
         bob.update(time_delta)
         bob.draw_ui(window_surface)
 
-        i = 2
-    elif i == 8 or i == 9 or i == 10:
-        game.start(window_surface, PlayerNum)
-        pol.update(time_delta)
-
         if (not PasswordEntry.get_text() == PasswordEntryRepeat.get_text()):
             alert_popup("Error", "The two passwords do not match each other!", "Please try again.")
         elif (Account.accountExists(UsernameEntry.get_text())):
@@ -235,8 +230,14 @@ while is_running:
             alert_popup("Error", "This email is already taken!", "Please try again.")
         elif (Account.register(UsernameEntry.get_text(), EmailAddressEntry.get_text(), PasswordEntry.get_text())):
             i = 1
+            continue
         else:
             alert_popup("Error", "Fill in the fields correctly.", "Please try again.")
+        
+        i = 2
+    elif i == 8 or i == 9 or i == 10:
+        game.start(window_surface, PlayerNum)
+        pol.update(time_delta)
 
     # window_surface.blit(background, (0, 0))
     # manager.draw_ui(window_surface)

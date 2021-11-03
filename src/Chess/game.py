@@ -15,9 +15,9 @@ import time
 board = chess.Board()
 
 # set Players
-player1 = Player("Joe")
+player1 = Player()
 # player2 = Naive('s')
-player2 = Smart('Smart')
+Players = [Player(), Naive(), Smart()]
 
 # start game
 
@@ -28,7 +28,8 @@ screen = None
 BOARD = None
 
 
-def start(window):
+def start(window, PlayerID):
+    player2 = Players[PlayerID]
     turn = 0
     while not board.is_checkmate():
         print("FEN:")
