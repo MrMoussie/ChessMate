@@ -1,6 +1,6 @@
 import sys, unittest
 
-sys.path.append("../../src/SQL")
+sys.path.append("../SQL")
 import Account, Connect, Queries
 
 # CONNECT

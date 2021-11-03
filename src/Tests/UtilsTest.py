@@ -1,5 +1,7 @@
-import unittest
-import src.Chess.utils as Utils
+import unittest, sys
+
+sys.path.append("../Chess")
+import utils as Utils
 import chess
 
 
