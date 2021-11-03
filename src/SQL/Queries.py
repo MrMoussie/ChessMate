@@ -1,11 +1,11 @@
 import Connect
 
-#Returns 1 single value in the table (i.e.: query[0] == "Value")
-#Return None if no results
-#Uses prepare statements, if not needed pass None in tuple.
+# Returns 1 single value in the table (i.e.: query[0] == "Value")
+# Return None if no results
+# Uses prepare statements, if not needed pass None in value.
 def getSQuery(query, value):
     try:
-        if (Connect.connectExists()):
+        if (Connect.connectExists() and query != None and query != ""):
             sql = Connect.getSQL()
             mycursor = sql.cursor(prepared=True)
 
@@ -23,10 +23,11 @@ def getSQuery(query, value):
     
     return None
 
-#Prepared statement
+# Prepared statement
+# Always give a tuple as second argument!
 def doQuery(query, tuple):
     try:
-        if (Connect.connectExists()):
+        if (Connect.connectExists() and query != None and query != ""):
             sql = Connect.getSQL()
             mycursor = sql.cursor(prepared=True)
 

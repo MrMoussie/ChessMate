@@ -1,7 +1,7 @@
-import mysql.connector
+import os, mysql.connector
 import configparser
 
-configFile = "../SQL/SQL.cfg"
+configFile = os.path.dirname(os.path.abspath(__file__)) + "/SQL.cfg"
 missionFiles = ["easy_missions.txt", "medium_missions.txt", "hard_missions.txt", "expert_missions.txt"]
 
 db = ""
@@ -44,6 +44,7 @@ def close():
     if (connectExists()):
         sql.cursor().close()
         sql.close()
+        sql = None
         print("SQL: Connection closed!")
 
 #Create database and table in case it does not already exist
@@ -64,6 +65,15 @@ def setupDB():
         
         setupMissions()
 
+#Delete database
+def dropDB():
+    global sql
+
+    if connectExists():
+        mycursor = sql.cursor()
+        mycursor.execute("DROP DATABASE {0};".format(db))
+        sql.commit()
+
 #Setup mission tables in database
 def setupMissions():
     global sql
@@ -71,7 +81,7 @@ def setupMissions():
     mycursor = sql.cursor()
 
     for i in range(len(missionFiles)):
-        with open("../SQL/missions/" + missionFiles[i]) as file:
+        with open(os.path.dirname(os.path.abspath(__file__)) + "/missions/" + missionFiles[i]) as file:
             fileName = missionFiles[i].split(".")[0]
             mycursor.execute("SELECT COUNT(*) FROM %s;" % fileName)
             count = mycursor.fetchone()

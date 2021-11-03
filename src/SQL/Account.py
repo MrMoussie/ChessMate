@@ -7,7 +7,7 @@ def generateSalt():
 def hash(password, salt):
     return hashlib.sha512(password.encode('utf-8') + salt.encode('utf-8')).hexdigest()
 
-#Check if account already exists
+# Check if account already exists
 def accountExists(name):
     if (name == None or name == ""):
         return True
@@ -16,7 +16,7 @@ def accountExists(name):
 
     return bool(result) if query != None else True
 
-#Check if email already exists
+# Check if email already exists
 def emailExists(email):
     if (email == None or email == ""):
         return True
@@ -26,7 +26,7 @@ def emailExists(email):
 
     return bool(result) if query != None else True
 
-#Insert account into database after validation
+# Insert account into database after validation
 def register(name, email, password):
     if (Connect.connectExists() and name != None and email != None and password != None and name != "" and email != "" and password != ""):
         if (accountExists(name) or emailExists(email)):
@@ -39,16 +39,14 @@ def register(name, email, password):
         query = "INSERT INTO {0}.login VALUES (%s, %s, %s, %s);".format(Connect.db)
         tuple = (name, email, hashedPass, salt)
         result = Queries.doQuery(query, tuple)
-
-        if (not result):
-            print("Error: could not insert into table!")
-            return False
-
-        return True
+        if (result):
+            return True
+        
+        print("Error: could not insert into table!")
     
     return False
 
-#Returns True if credentials are correct, False for otherwise as well as errors
+# Returns True if credentials are correct, False for otherwise as well as errors
 def login(name, password):
     if (Connect.connectExists() and name != None and password != None and name != "" and password != ""):
         if (not accountExists(name)):
@@ -62,3 +60,12 @@ def login(name, password):
         return True if hashedPass == hash(password, salt) else False
         
     return False
+
+# Delete account from database
+def delete(name, password):
+    if (login(name, password)):
+        query = "DELETE FROM {0}.login WHERE name = %s;".format(Connect.db)
+        return Queries.doQuery(query, (name, ))
+
+    return False
+        
