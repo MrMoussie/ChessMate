@@ -1,13 +1,17 @@
 import utils
 import speech_recognition as sr
 
-
 def getmove(info):
     # obtain audio from the microphone
-    r = sr.Recognizer()
     move = ""
     with sr.Microphone() as source:
-        print(info)
+        r = sr.Recognizer()
+        
+        print("INFO: " + info)
+        # r.adjust_for_ambient_noise(source,duration=1)
+        # r.non_speaking_duration = 0.05
+        # r.pause_threshold = 0.1
+        # r.energy_threshold =50
         audio = r.listen(source)
     # recognize speech using google speech recognition
     try:
