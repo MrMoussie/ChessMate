@@ -1,12 +1,19 @@
 import utils
 import voice
 
-class Player():
-    def __init__(self, name):
+
+class Player:
+    def __init__(self):
+        self.name = 'opponent'
+
+    def set_name(self, name):
         self.name = name
-    
+
+    def get_name(self):
+        return self.name
+
     def makeMove(self, board):
-        #move = input("Give me your move: ")
+        # move = input("Give me your move: ")
         move = voice.getmove("Give your move " + self.name)
         print(move)
         checkMove = utils.isValid(move)
@@ -19,5 +26,5 @@ class Player():
             except ValueError:
                 return
             return doMove
-        else: return None
-    
+        else:
+            return None

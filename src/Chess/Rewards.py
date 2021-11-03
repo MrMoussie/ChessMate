@@ -27,6 +27,7 @@ def analyzeMove(board, player, move):
         check_kill_vic_pairs(killer, victim)
     print(victims)
     return victim
+
 def check_victims(player):
 #print(no_of_victims)
     pawns_killed = (victims.get(player)).count("PAWN")

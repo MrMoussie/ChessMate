@@ -19,7 +19,7 @@ def traslateMove(move):
     length = len(move)
     if length == 4 or length == 5:
         move = getNormalCommand(move)
-    if move != '':
+    if move != '' and move is not None:
         words = str(move).lower().split(' ')
         if len(words) > 3:
             if numbs.__contains__(words[1]):
@@ -32,6 +32,7 @@ def traslateMove(move):
             return first + second
 
 
+# Format a move in the form of LetterNumberLetterNumber or LetterNumber LetterNumber
 def getNormalCommand(move):
     move = str(move).lower()
     if len(move) == 4:
@@ -44,13 +45,13 @@ def getNormalCommand(move):
                 return ''
             if move[3] not in horizontal:
                 return ''
-            return move[0] + 'ddd ' + move[1] + ' ' + move[2] + 'dd ' + move[3]
+            return move[0] + 'ddd ' + move[1] + ' ' + move[2] + 'ddd ' + move[3]
     elif len(move) == 5:
-        move = move.replace(' ','')
+        move = move.replace(' ', '')
         toReturn = ''
-        if len(move)==4:
+        if len(move) == 4:
             if move[1].isalnum() and move[3].isalnum():
                 if move[1] in horizontal and move[3] in horizontal:
                     if move[0] in vertical and move[2] in vertical:
-                        return move[0] + 'ddd ' + move[1] + ' ' + move[2] + 'dd ' + move[3]
+                        return move[0] + 'ddd ' + move[1] + ' ' + move[2] + 'ddd ' + move[3]
             return toReturn
