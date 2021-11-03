@@ -2,13 +2,15 @@
     "python.testing.unittestArgs": [
         "-v",
         "-s",
-        "./Test",
+        "./src/Tests",
         "-p",
-        "*_test.py"
+        "*Test.py"
     ],
     "python.testing.pytestEnabled": false,
     "python.testing.unittestEnabled": true,
     "python.analysis.extraPaths": [
-        "./src/SQL"
+        "./src/SQL",
+        "./src/Tests",
+        "./src/Chess"
     ]
 }
