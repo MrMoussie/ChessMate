@@ -80,10 +80,10 @@ UsernameEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(25
 EmailAddressEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 250, 300, 40), manager=petra)
 PasswordEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 300, 300, 40), manager=petra)
 PasswordEntryRepeat = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 350, 300, 40), manager=petra)
-EmailAddressEntry.set_text("Email address")
-UsernameEntry.set_text("Username")
-PasswordEntry.set_text("Password")
-PasswordEntryRepeat.set_text("Repeat password")
+# EmailAddressEntry.set_text("Email address")
+# UsernameEntry.set_text("Username")
+# PasswordEntry.set_text("Password")
+# PasswordEntryRepeat.set_text("Repeat password")
 
 GoBack1 = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Return', manager=petra)
 GoBack2 = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Return', manager=pol)
@@ -246,6 +246,11 @@ while is_running:
         bob.update(time_delta)
         bob.draw_ui(window_surface)
     elif i == 2:
+        window_surface.blit(register_username, (100, 188))
+        window_surface.blit(register_email, (125, 242))
+        window_surface.blit(register_password, (100, 290))
+        window_surface.blit(register_confirm_password, (10, 342))
+        
         petra.update(time_delta)
         petra.draw_ui(window_surface)
     elif i == 3:
