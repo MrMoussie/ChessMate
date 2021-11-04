@@ -28,7 +28,7 @@ print(board)
 screen = None
 BOARD = None
 
-def start(window,playerId):
+def start(window,playerId, missions):
     turn = 0
     count = 0
     player2 = PLAYERS[playerId]

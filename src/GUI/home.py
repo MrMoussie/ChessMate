@@ -130,9 +130,9 @@ def alert_popup(title, message, path):
 #         pygame.quit()
 
 # Check if connection is valid to the database
-if (not Connect.connectExists()):
-    alert_popup("Error", "Program can not connect to SQL with given credentials!", "Please refer to the README file to setup a database.")
-    is_running = False
+# if (not Connect.connectExists()):
+#     alert_popup("Error", "Program can not connect to SQL with given credentials!", "Please refer to the README file to setup a database.")
+#     is_running = False
 
 # if (not Connect.connectExists()):
 #     alert_popup("Error", "Program can not connect to SQL with given credentials!", "Please refer to the README file to setup a database.")
@@ -308,14 +308,7 @@ while is_running:
 
         missions.update(time_delta)
         missions.draw_ui(window_surface)
-        
-
-
         i = 2
-    elif i == 8 or i == 9 or i == 10:
-        game.start(window_surface, PlayerNum)
-        pol.update(time_delta)
-
 
     # window_surface.blit(background, (0, 0))
     # manager.draw_ui(window_surface)
