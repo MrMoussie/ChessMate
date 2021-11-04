@@ -10,7 +10,7 @@ from ComputerPlayer import Smart
 import Rewards
 
 sys.path.append("../GUI")
-# import board as Board
+import board as Board
 import time
 
 # init Board
@@ -28,15 +28,15 @@ print(board)
 screen = None
 BOARD = None
 
-def start(window,playerId):
+def start(window,playerId, missions):
     turn = 0
     count = 0
     player2 = PLAYERS[playerId]
-    Rewards.setMissions(player1)
-    Rewards.setMissions(player2)
+    # Rewards.setMissions(player1)
+    # Rewards.setMissions(player2)
     while not board.is_checkmate():
-        # Board.draw_board(board.fen(), window)
-        # pygame.display.update()
+        Board.draw_board(board.fen(), window)
+        pygame.display.update()
         time.sleep(2)
         player = turn % 2
         if player == 0:
@@ -56,4 +56,4 @@ def start(window,playerId):
         print(board)
         # move = ("".join(voice.getMove().split(" "))).lower()
 
-start(screen,1)
+# start(screen,1)
