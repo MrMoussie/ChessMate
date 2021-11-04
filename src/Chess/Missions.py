@@ -12,7 +12,6 @@ def current_mission_set():
 def get_easy_mission():
     id = random.randint(1,10)
     query = "SELECT description FROM easy_missions WHERE id = %s;"
-    print(query)
     description = Queries.getSQuery(query, id)
     return description
 

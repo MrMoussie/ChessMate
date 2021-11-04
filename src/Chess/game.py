@@ -5,7 +5,7 @@ import sys
 from Players import Player
 from ComputerPlayer import Naive
 from ComputerPlayer import Smart
-import Rewards
+import Rewards, Missions
 
 sys.path.append("../GUI")
 import board as Board
@@ -27,8 +27,8 @@ print(board.fen())
 screen = None
 BOARD = None
 
-
-def start(window, PlayerID):
+def start(window, PlayerID, Missions):
+    
     player2 = Players[PlayerID]
     turn = 0
     while not board.is_checkmate():
