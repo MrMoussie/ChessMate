@@ -19,13 +19,22 @@ window_surface = pygame.display.set_mode(config.home_size, pygame.RESIZABLE)
 
 font_color = (0, 150, 250)
 font_obj = pygame.font.Font("fonts/segoeprb.ttf", 25)
-text_obj = font_obj.render("ChessMate", True, font_color)
+font_obj_main = pygame.font.Font("fonts/segoeprb.ttf", 35)
+text_obj = font_obj_main.render("ChessMate", True, font_color)
 
-mission_text_obj = font_obj.render("Missions", True, font_color)  
+mission_text_obj = font_obj_main.render("Missions", True, font_color)  
 mission_easy_text_obj = font_obj.render("Easy", True, font_color)  
 mission_medium_text_obj = font_obj.render("Medium", True, font_color)  
 mission_hard_text_obj = font_obj.render("Hard", True, font_color)  
-mission_expert_text_obj = font_obj.render("Expert", True, font_color)  
+mission_expert_text_obj = font_obj.render("Expert", True, font_color)
+
+login_username = font_obj.render("Username", True, font_color) 
+login_password = font_obj.render("Password", True, font_color)
+
+register_username = font_obj.render("Username", True, font_color)  
+register_email = font_obj.render("E-mail", True, font_color)  
+register_password = font_obj.render("Password", True, font_color)  
+register_confirm_password = font_obj.render("Confirm Password", True, font_color)  
 
 i = 0
 
@@ -50,8 +59,8 @@ SignUp = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Sig
 Quit = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectT, text='Quit', manager=manager)
 Username = pygame_gui.elements.UITextEntryLine(relative_rect=EntryLayoutRectU, manager=manager)
 Password = pygame_gui.elements.UITextEntryLine(relative_rect=EntryLayoutRectP, manager=manager)
-Username.set_text("Username")
-Password.set_text("Password")
+# Username.set_text("Username")
+# Password.set_text("Password")
 
 PlayGame = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectL, text='Play game', manager=bob)
 ScoreBoard = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Score board', manager=bob)
@@ -132,7 +141,9 @@ if (not Connect.connectExists):
     sleep(5)
     is_running = False
 
-# Get missions from missions file and display
+#################################################
+## Get missions from missions file and display ##
+#################################################
 easy_mission = Missions.get_easy_mission()
 medium_mission = Missions.get_medium_mission()
 hard_mission = Missions.get_hard_mission()
@@ -152,7 +163,7 @@ mission_expert_text = font_obj.render(expert_mission, True, mission_color)
 
 while is_running:        
     window_surface.fill((255, 255, 255))
-    window_surface.blit(text_obj, (330, 100))
+    window_surface.blit(text_obj, (300, 100))
     time_delta = clock.tick(60) / 1000.0
 
     for event in pygame.event.get():
@@ -174,9 +185,9 @@ while is_running:
                 elif event.ui_element == ScoreBoard:
                     # Here we should add the part of the scoreboard, not yet sure how to implement that
                     i = 4
-                elif event.ui_element == Logout:
-                    i = 5
-                elif event.ui_element == GoBack1 or event.ui_element == GoBack2:
+                elif event.ui_element == Logout or event.ui_element == GoBack1:
+                    i = 0
+                elif event.ui_element == GoBack2:
                     i = 6
                 elif event.ui_element == GoBack3:
                     i = 1
@@ -226,6 +237,9 @@ while is_running:
         elif i == 11:
             missions.process_events(event)
     if i == 0:
+        window_surface.blit(login_username, (100, 188))
+        window_surface.blit(login_password, (100, 290))
+
         manager.update(time_delta)
         manager.draw_ui(window_surface)
     elif i == 1:
@@ -234,7 +248,6 @@ while is_running:
     elif i == 2:
         petra.update(time_delta)
         petra.draw_ui(window_surface)
-
     elif i == 3:
         players.update(time_delta)
         players.draw_ui(window_surface)
@@ -268,11 +281,12 @@ while is_running:
         
         i = 2
     elif i == 8 or i == 9 or i == 10:
-        game.start(window_surface, PlayerNum)
+        missions = [easy_mission, medium_mission, hard_mission, expert_mission]
+        game.start(window_surface, PlayerNum, missions)
         pol.update(time_delta)
     elif i == 11:
         window_surface.fill((255, 255, 255))
-        window_surface.blit(mission_text_obj, (340, 100))
+        window_surface.blit(mission_text_obj, (330, 100))
         window_surface.blit(mission_easy_text_obj, (75, 175))
         window_surface.blit(mission_medium_text_obj, (75, 225))
         window_surface.blit(mission_hard_text_obj, (75, 275))

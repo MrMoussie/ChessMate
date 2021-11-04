@@ -8,7 +8,6 @@ numbs = {'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5', 'six': 
 def isValid(move):
     toReturn = False
     if move != None and len(move) == 4:
-        print(type(move[0]), move[1], move[2], move[3])
         if (vertical.__contains__(move[0]) and horizontal.__contains__(move[1]) and
                 vertical.__contains__(move[2]) and horizontal.__contains__(move[3])):
             toReturn = True
