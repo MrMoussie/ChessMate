@@ -22,8 +22,22 @@ rooks_killed = 0
 kill_vic_pairs = [('p', 'p'), ('b', 'p'), ('r', 'p'), ('q', 'p'), ('n', 'p'), ('k', 'p'), ('p', 'p'), ('q', 'n'),
                   ('q', 'q'), ('n', 'n'), ('n', 'q'), ('r', 'r'), ('b', 'b')]
 
+
+"""Players' Missions"""
+missions = {0: [], 1: []}
+
+
 """
 @ensures victims updated when killer kills a opponent's piece
+"""
+
+
+
+"""
+Make a function which calls all the mission check functions together and add the function call to analyse move 
+Once a mission is completed, set the corresponding flag to 1 
+
+add a function which goes through all the flags after every move and alerts the GUI if a flag is 1 
 """
 def analyzeMove(board, player_id, move):
     # print(piece)
@@ -33,7 +47,7 @@ def analyzeMove(board, player_id, move):
         killer = str(kill_vic[0]).lower()
         victim = str(kill_vic[1]).lower()
         victims.get(player_id).append(dic.get(victim))
-        check_pawns(player)
+        check_pawns(player_id)
         if kill_vic_pairs.__contains__((killer, victim)):
             check_kill_vic_pairs(killer, victim)
     print(victims)
@@ -94,7 +108,6 @@ def count_moves(m, board):
         print("something")
     elif m <= 40 and board.is_checkmate():
         print("something")
-
 
 
 
