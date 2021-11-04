@@ -32,8 +32,8 @@ def start(window,playerId, missions):
     turn = 0
     count = 0
     player2 = PLAYERS[playerId]
-    # Rewards.setMissions(player1)
-    # Rewards.setMissions(player2)
+    Rewards.setMissions(missions)
+    #Rewards.setMissions(missions)
     while not board.is_checkmate():
         Board.draw_board(board.fen(), window)
         pygame.display.update()
