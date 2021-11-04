@@ -111,16 +111,17 @@ def alert_popup(title, message, path):
 #         pygame.quit()
 
 #Check if connection is valid to the database
-if (not Connect.connectExists()):
-    alert_popup("Error", "Program can not connect to SQL with given credentials!", "Please refer to the README file to setup a database.")
-    is_running = False
 
-
-if (not Connect.connectExists):
-    alert_popup("Error", "Program can not connect to SQL with given credentials!",
-                "Please refer to the README in the SQL folder.")
-    sleep(5)
-    is_running = False
+# if (not Connect.connectExists()):
+#     alert_popup("Error", "Program can not connect to SQL with given credentials!", "Please refer to the README file to setup a database.")
+#     is_running = False
+#
+#
+# if (not Connect.connectExists):
+#     alert_popup("Error", "Program can not connect to SQL with given credentials!",
+#                 "Please refer to the README in the SQL folder.")
+#     sleep(5)
+#     is_running = False
 
 while is_running:
     window_surface.fill((255, 255, 255))
@@ -134,10 +135,11 @@ while is_running:
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == Login:
-                    if (Account.login(Username.get_text(), Password.get_text())):
-                        i = 1
-                    else:
-                        alert_popup("Error", "Either your password or username is incorrect.", "Please try again.")
+                    i = 1
+                    # if (Account.login(Username.get_text(), Password.get_text())):
+                    #     i = 1
+                    # else:
+                    #     alert_popup("Error", "Either your password or username is incorrect.", "Please try again.")
                 elif event.ui_element == SignUp:
                     i = 2
                 elif event.ui_element == PlayGame:

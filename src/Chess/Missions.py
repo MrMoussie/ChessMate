@@ -5,8 +5,9 @@ import Queries
 
 
 def current_mission_set():
-    print("%s" % get_easy_mission())
-   # print("/n%s" % get_medium_mission())            Uncomment once data base is connected
+    
+    return [get_easy_mission(), get_medium_mission(), get_hard_mission(), get_expert_mission()]
+   # print("/n%s" % get_medium_mission())            Uncomment once database is connected
    # print("/n%s" % get_hard_mission())
    # print("/n%s" % get_expert_mission())
 
@@ -16,7 +17,7 @@ def get_easy_mission():
     query = ("SELECT description FROM easy_missions WHERE id = %d", id)
     description = Queries.getSQuery(query, None)
     print(description)
-    return "kill pawn using pawn"
+    return "(k,p) kill pawn using pawn"
 
 
 def get_medium_mission():

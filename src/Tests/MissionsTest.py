@@ -4,17 +4,17 @@ import chess
 sys.path.append("../Chess")
 import Players as Player
 import ComputerPlayer as Computer
-import Missions
+import Rewards
 
 class MissionsTest(unittest.TestCase):
 
     def setUp(self):
         self.board = chess.Board()
         self.player = Computer()
-        self.mission = Missions()
+        self.mission = Rewards()
 
     def test_analize_move(self):
-        self.assertEqual(self.mission)
+        self.assertEqual(Rewards.)
 
 
 if __name__ == '__main__':

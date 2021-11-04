@@ -13,18 +13,20 @@ class Player:
         return self.name
 
     def makeMove(self, board):
-        # move = input("Give me your move: ")
-        move = voice.getmove("Give your move " + self.name)
-        print(move)
+        move = input("Give me your move: ")
+        # move = voice.getmove("Give your move " + self.name)
+        #print(move)
         checkMove = utils.isValid(move)
         if checkMove:
-            print(checkMove)
+            print("move is valid ", checkMove)
+            print(board.legal_moves)
             try:
-                isLegal = board.is_legal(board.parse_uci(move))
+                isLegal = board.is_pseudo_legal(board.parse_uci(move))
                 if isLegal:
                     doMove = board.parse_uci(move)
             except ValueError:
                 return
+            print('move donehhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
             return doMove
         else:
             return None
