@@ -145,13 +145,9 @@ if (not Connect.connectExists):
 ## Get missions from missions file and display ##
 #################################################
 easy_mission = Missions.get_easy_mission()
-easy_flag = False
 medium_mission = Missions.get_medium_mission()
-easy_flag = False
 hard_mission = Missions.get_hard_mission()
-easy_flag = False
 expert_mission = Missions.get_expert_mission()
-easy_flag = False
 
 easy_mission = "" if easy_mission == None else easy_mission.decode('utf-8')
 medium_mission = "" if medium_mission == None else medium_mission.decode('utf-8')
