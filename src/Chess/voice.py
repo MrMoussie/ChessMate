@@ -4,19 +4,23 @@ import speech_recognition as sr
 def getmove(info):
     # obtain audio from the microphone
     move = ""
-    with sr.Microphone() as source:
+    micIndex = 0
+    for index, name in enumerate(sr.Microphone.list_microphone_names()):
+        if (name == "default"):
+            micIndex = index
+    with sr.Microphone(device_index=micIndex) as source:
         r = sr.Recognizer()
         
         print("INFO: " + info)
-        # r.adjust_for_ambient_noise(source,duration=1)
-        # r.non_speaking_duration = 0.05
-        # r.pause_threshold = 0.1
+        r.adjust_for_ambient_noise(source,duration=1)
+        #r.non_speaking_duration = 0.25
+        #r.pause_threshold = 0.5
         # r.energy_threshold =50
         audio = r.listen(source)
     # recognize speech using google speech recognition
     try:
         move = r.recognize_google(audio, language="en-us")
-        print(move)
+        print(move) 
         move = utils.traslateMove(move)
         return move
     except sr.UnknownValueError:
