@@ -1,6 +1,8 @@
 import chess
 import pygame.display
 import sys
+import Missions
+import Rewards
 
 from Players import Player
 from ComputerPlayer import Naive
@@ -8,7 +10,7 @@ from ComputerPlayer import Smart
 import Rewards
 
 sys.path.append("../GUI")
-import board as Board
+# import board as Board
 import time
 
 # init Board
@@ -17,25 +19,24 @@ board = chess.Board()
 # set Players
 player1 = Player()
 # player2 = Naive('s')
-Players = [Player(), Naive(), Smart()]
+PLAYERS = [Player(), Naive(), Smart()]
 
 # start game
-
+print(Missions.current_mission_set())
 print(board)
-print(board.fen())
 
 screen = None
 BOARD = None
 
-
-def start(window, PlayerID):
-    player2 = Players[PlayerID]
+def start(window,playerId):
     turn = 0
+    count = 0
+    player2 = PLAYERS[playerId]
+    Rewards.setMissions(player1)
+    Rewards.setMissions(player2)
     while not board.is_checkmate():
-        print("FEN:")
-        print(board.fen())
-        Board.draw_board(board.fen(), window)
-        pygame.display.update()
+        # Board.draw_board(board.fen(), window)
+        # pygame.display.update()
         time.sleep(2)
         player = turn % 2
         if player == 0:
@@ -43,6 +44,8 @@ def start(window, PlayerID):
             while move is None:
                 move = player1.makeMove(board)
             Rewards.analyzeMove(board, player, move)
+            count = count + 1
+            Rewards.count_moves(count, board)
             board.push(move)
             turn += 1
         else:
@@ -50,10 +53,7 @@ def start(window, PlayerID):
             Rewards.analyzeMove(board, player, m)
             board.push(m)
             turn += 1
-        # BOARD.draw_board(board.fen(), window_surface)
-        # print(str(board.fen()))
-        # Update.update(str(board.fen()))
-        # Board.draw_board(board.fen(), window)
-        # print(board)
+        print(board)
         # move = ("".join(voice.getMove().split(" "))).lower()
 
+start(screen,1)

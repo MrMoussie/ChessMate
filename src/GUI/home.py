@@ -134,12 +134,16 @@ if (not Connect.connectExists()):
     alert_popup("Error", "Program can not connect to SQL with given credentials!", "Please refer to the README file to setup a database.")
     is_running = False
 
-
-if (not Connect.connectExists):
-    alert_popup("Error", "Program can not connect to SQL with given credentials!",
-                "Please refer to the README in the SQL folder.")
-    sleep(5)
-    is_running = False
+# if (not Connect.connectExists()):
+#     alert_popup("Error", "Program can not connect to SQL with given credentials!", "Please refer to the README file to setup a database.")
+#     is_running = False
+#
+#
+# if (not Connect.connectExists):
+#     alert_popup("Error", "Program can not connect to SQL with given credentials!",
+#                 "Please refer to the README in the SQL folder.")
+#     sleep(5)
+#     is_running = False
 
 #################################################
 ## Get missions from missions file and display ##
@@ -177,10 +181,11 @@ while is_running:
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
                 if event.ui_element == Login:
-                    if (Account.login(Username.get_text(), Password.get_text())):
-                        i = 1
-                    else:
-                        alert_popup("Error", "Either your password or username is incorrect.", "Please try again.")
+                    i = 1
+                    # if (Account.login(Username.get_text(), Password.get_text())):
+                    #     i = 1
+                    # else:
+                    #     alert_popup("Error", "Either your password or username is incorrect.", "Please try again.")
                 elif event.ui_element == SignUp:
                     i = 2
                 elif event.ui_element == PlayGame:
@@ -304,6 +309,12 @@ while is_running:
         missions.update(time_delta)
         missions.draw_ui(window_surface)
         
+
+
+        i = 2
+    elif i == 8 or i == 9 or i == 10:
+        game.start(window_surface, PlayerNum)
+        pol.update(time_delta)
 
 
     # window_surface.blit(background, (0, 0))
