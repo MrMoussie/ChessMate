@@ -13,8 +13,8 @@ class Player:
         return self.name
 
     def makeMove(self, board):
-        #move = input("Give me your move: ")
-        move = voice.getmove("Give your move " + self.name)
+        move = input("Give me your move: ")
+        #move = voice.getmove("Give your move " + self.name)
         #print(move)
         checkMove = utils.isValid(move)
         if checkMove:
