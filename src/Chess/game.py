@@ -10,7 +10,7 @@ from ComputerPlayer import Smart
 import Rewards
 
 sys.path.append("../GUI")
-import board as Board
+# import board as Board
 import time
 
 # init Board
@@ -28,15 +28,15 @@ print(board)
 screen = None
 BOARD = None
 
-def start(window,playerId, missions):
+
+def start(window, player_id, missions):
     turn = 0
     count = 0
-    player2 = PLAYERS[playerId]
-    #Rewards.setMissions(missions)
-    #Rewards.setMissions(missions)
+    player2 = PLAYERS[player_id]
+    Rewards.set_missions(missions)
     while not board.is_checkmate():
-        Board.draw_board(board.fen(), window)
-        pygame.display.update()
+        # Board.draw_board(board.fen(), window)
+        # pygame.display.update()
         time.sleep(2)
         player = turn % 2
         if player == 0:
@@ -49,11 +49,23 @@ def start(window,playerId, missions):
             board.push(move)
             turn += 1
         else:
-            m = player2.makeMove(board)
-            Rewards.analyzeMove(board, player, m)
-            board.push(m)
+            if player_id == 0:
+                move = player2.makeMove(board)
+                while move is None:
+                    move = player2.makeMove(board)
+                Rewards.analyzeMove(board, player, move)
+                count = count + 1
+                Rewards.count_moves(count, board)
+                board.push(move)
+            else:
+                move = player2.makeMove(board)
+                Rewards.analyzeMove(board, player, move)
+                board.push(move)
             turn += 1
         print(board)
         # move = ("".join(voice.getMove().split(" "))).lower()
 
-# start(screen,1)
+
+MISSIONS = ['Kill 1 pawn using a pawn', 'Kill 4 pawns in a single match', 'Kill 1 bishop',
+            'Kill the queen using the queen']
+start(screen, 0, MISSIONS)

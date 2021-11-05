@@ -44,7 +44,7 @@ petra = pygame_gui.UIManager(config.home_size)
 pol = pygame_gui.UIManager(config.home_size)
 daan = pygame_gui.UIManager(config.home_size)
 players = pygame_gui.UIManager(config.home_size)
-missions = pygame_gui.UIManager(config.home_size)
+MISSIONS = pygame_gui.UIManager(config.home_size)
 
 ButtonLayoutRectL = pygame.Rect(340, 350, 100, 30)
 ButtonLayoutRectS = pygame.Rect(340, 400, 100, 30)
@@ -73,7 +73,7 @@ Smart = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='AI l
 PlayerNum = 0
 
 # Mission screen
-ContinueGame = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectT, text='Continue', manager=missions)
+ContinueGame = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectT, text='Continue', manager=MISSIONS)
 
 SignUpScreen = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Sign up', manager=petra)
 UsernameEntry = pygame_gui.elements.UITextEntryLine(relative_rect=pygame.Rect(250, 200, 300, 40), manager=petra)
@@ -129,7 +129,7 @@ def alert_popup(title, message, path):
 #         is_running = False
 #         pygame.quit()
 
-# Check if connection is valid to the database
+#Check if connection is valid to the database
 if (not Connect.connectExists()):
     alert_popup("Error", "Program can not connect to SQL with given credentials!", "Please refer to the README file to setup a database.")
     is_running = False
@@ -235,7 +235,7 @@ while is_running:
         elif i == 8 or i == 9 or i == 10:
             pol.process_events(event)
         elif i == 11:
-            missions.process_events(event)
+            MISSIONS.process_events(event)
     if i == 0:
         window_surface.blit(login_username, (100, 188))
         window_surface.blit(login_password, (100, 290))
@@ -286,8 +286,8 @@ while is_running:
         
         i = 2
     elif i == 8 or i == 9 or i == 10:
-        missions = [easy_mission, medium_mission, hard_mission, expert_mission]
-        game.start(window_surface, PlayerNum, missions)
+        MISSIONS = [easy_mission, medium_mission, hard_mission, expert_mission]
+        game.start(window_surface, PlayerNum, MISSIONS)
         pol.update(time_delta)
     elif i == 11:
         window_surface.fill((255, 255, 255))
@@ -302,8 +302,8 @@ while is_running:
         window_surface.blit(mission_hard_text, (200, 275))
         window_surface.blit(mission_expert_text, (200, 325))
 
-        missions.update(time_delta)
-        missions.draw_ui(window_surface)
+        MISSIONS.update(time_delta)
+        MISSIONS.draw_ui(window_surface)
         
 
 
