@@ -66,6 +66,6 @@ def start(window, player_id, missions):
         # move = ("".join(voice.getMove().split(" "))).lower()
 
 
-MISSIONS = ['Kill 1 pawn using a pawn', 'Kill 4 pawns in a single match', 'Kill 1 bishop and 1 knight in a single game',
+MISSIONS = ['Kill 1 pawn using a pawn', 'Kill 4 pawns in a single match', 'Kill 1 bishop',
             'Kill the queen using the queen']
 start(screen, 0, MISSIONS)
