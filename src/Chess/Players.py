@@ -13,8 +13,8 @@ class Player:
         return self.name
 
     def makeMove(self, board):
-        move = input("Give me your move: ")
-        #move = voice.getmove("Give your move " + self.name)
+        #move = input("Give me your move: ")
+        move = voice.getmove("Give your move " + self.name)
         #print(move)
         checkMove = utils.isValid(move)
         if checkMove:
@@ -26,7 +26,7 @@ class Player:
                     doMove = board.parse_uci(move)
             except ValueError:
                 return
-            print('move donehhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
+            #print('move donehhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
             return doMove
         else:
             return None
