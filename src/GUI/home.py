@@ -9,7 +9,7 @@ sys.path.append("../Chess")
 import game, Missions
 
 sys.path.append("../SQL")
-import Connect, Account
+import Connect, Account, Queries
 import atexit
 from time import sleep
 
@@ -63,7 +63,7 @@ Password = pygame_gui.elements.UITextEntryLine(relative_rect=EntryLayoutRectP, m
 # Password.set_text("Password")
 
 PlayGame = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectL, text='Play game', manager=bob)
-ScoreBoard = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Score board', manager=bob)
+ScoreBoard = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Leaderboard', manager=bob)
 Logout = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectU, text='Logout', manager=bob)
 
 # Setting players
@@ -159,7 +159,15 @@ mission_color = (0, 0, 0)
 mission_easy_text = font_obj.render(easy_mission, True, mission_color)  
 mission_medium_text = font_obj.render(medium_mission, True, mission_color)  
 mission_hard_text = font_obj.render(hard_mission, True, mission_color)  
-mission_expert_text = font_obj.render(expert_mission, True, mission_color)  
+mission_expert_text = font_obj.render(expert_mission, True, mission_color) 
+
+leaderboard_obj = font_obj_main.render("Leaderboard", True, font_color)  
+leaderboard_name = font_obj.render("Name", True, font_color)
+leaderboard_elo = font_obj.render("Elo", True, font_color)
+leaderboard_points = font_obj.render("Points", True, font_color)
+leaderboard_wins = font_obj.render("Wins", True, font_color)
+leaderboard_loss = font_obj.render("Loss", True, font_color)
+leaderboard_winrate = font_obj.render("Winrate", True, font_color)
 
 while is_running:        
     window_surface.fill((255, 255, 255))
@@ -260,6 +268,38 @@ while is_running:
 
         # pol.draw_ui(window_surface)
     elif i == 4:
+        query = "SELECT * FROM leaderboard;"
+        result = Queries.getAllQuery(query, None)
+        
+        window_surface.fill((255, 255, 255))
+        window_surface.blit(leaderboard_obj, (280, 50))
+
+        window_surface.blit(leaderboard_name, (50, 100))
+        window_surface.blit(leaderboard_elo, (180, 100))
+        window_surface.blit(leaderboard_points, (280, 100))
+        window_surface.blit(leaderboard_wins, (420, 100))
+        window_surface.blit(leaderboard_loss, (550, 100))
+        window_surface.blit(leaderboard_winrate, (650, 100))
+
+        height = 150
+
+        for row in result:
+            name = font_obj.render(row[0].decode('utf-8'), True, mission_color)  
+            elo = font_obj.render(str(row[1]), True, mission_color)  
+            points = font_obj.render(str(row[2]), True, mission_color)  
+            wins = font_obj.render(str(row[3]), True, mission_color)  
+            loss = font_obj.render(str(row[4]), True, mission_color)  
+            winrate = font_obj.render(str(row[5]), True, mission_color)  
+            window_surface.blit(name, (50, height))
+            window_surface.blit(elo, (180, height))
+            window_surface.blit(points, (280, height))
+            window_surface.blit(wins, (420, height))
+            window_surface.blit(loss, (550, height))
+            window_surface.blit(winrate, (650, height))
+
+            height += 50
+
+
         daan.update(time_delta)
         daan.draw_ui(window_surface)
     elif i == 5:
