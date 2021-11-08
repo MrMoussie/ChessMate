@@ -1,10 +1,10 @@
 Kill the queen using the queen
 Kill 1 pawn using the king
 Kill the queen using a knight
-Kill 1 bishop, 1 rook and 1 knight in a single game
-Give two consecutive checks
 Survive 5 checks in a single game
-Eliminate all opponent pawns in a single game
+Kill 1 bishop, 1 rook and 1 knight in a single game
 Win a game within 30 moves
-Win 2 games in a row
 Win a game within 20 moves
+Eliminate all opponent pawns in a single game
+Give two consecutive checks
+Win 2 games in a row

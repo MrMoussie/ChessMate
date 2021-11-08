@@ -287,7 +287,7 @@ while is_running:
         i = 2
     elif i == 8 or i == 9 or i == 10:
         MISSIONS = [easy_mission, medium_mission, hard_mission, expert_mission]
-        game.start(window_surface, PlayerNum, MISSIONS)
+        game.start(window_surface, PlayerNum, MISSIONS, alert_popup)
         pol.update(time_delta)
     elif i == 11:
         window_surface.fill((255, 255, 255))
