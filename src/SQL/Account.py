@@ -40,6 +40,8 @@ def register(name, email, password):
         tuple = (name, email, hashedPass, salt)
         result = Queries.doQuery(query, tuple)
         if (result):
+            query = "INSERT INTO {0}.leaderboard VALUES(%s, 0, 0, 0, 0, 0)".format(Connect.db)
+            Queries.doQuery(query, (name, ))
             return True
         
         print("Error: could not insert into table!")
