@@ -65,6 +65,11 @@ def setupDB():
         
         setupMissions()
 
+        mycursor.execute('CREATE TABLE IF NOT EXISTS leaderboard (%s, %s, %s, %s, %s, %s, %s);' % 
+            ("name VARCHAR(25) PRIMARY KEY", "elo INT", "missionPoints INT", "wins INT", "loss INT", "winrate INT", "FOREIGN KEY(name) REFERENCES login(name)"))
+
+        sql.commit()
+
 #Delete database
 def dropDB():
     global sql
