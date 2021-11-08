@@ -6,7 +6,7 @@ from tkinter import *
 from threading import Thread
 
 sys.path.append("../Chess")
-import game, Missions
+import game, Missions, Leaderboard
 
 sys.path.append("../SQL")
 import Connect, Account
@@ -268,7 +268,7 @@ while is_running:
 
         # pol.draw_ui(window_surface)
     elif i == 4:
-        result = Missions.getLeaderboard()
+        result = Leaderboard.getLeaderboard()
         
         if (result != None and len(result) != 0):
             window_surface.fill((255, 255, 255))

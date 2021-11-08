@@ -1,14 +1,14 @@
 import sys, unittest
 
 sys.path.append("../SQL")
-import Account, Connect, Queries
+import Queries, Connect, Account
 
 # CONNECT
 class TestConnect(unittest.TestCase):
     def test_connectExists_getSQL_close(self):
         self.assertFalse(Connect.connectExists())
         self.assertIsNone(Connect.getSQL())
-        
+
         Connect.connect()
         self.assertTrue(Connect.connectExists())
         self.assertIsNotNone(Connect.getSQL())
@@ -23,22 +23,27 @@ class TestConnect(unittest.TestCase):
 
         try:
             query = "SHOW DATABASES LIKE 'ChessMate';"
-            self.assertEqual(Queries.getSQuery(query, None).decode('utf-8'), "ChessMate")
+            self.assertEqual(Queries.getSQuery(
+                query, None).decode('utf-8'), "ChessMate")
 
             query = "SHOW TABLES IN ChessMate LIKE 'easy_missions';"
-            self.assertEqual(Queries.getSQuery(query, None).decode('utf-8'), "easy_missions")
+            self.assertEqual(Queries.getSQuery(
+                query, None).decode('utf-8'), "easy_missions")
 
             query = "SHOW TABLES IN ChessMate LIKE 'medium_missions';"
-            self.assertEqual(Queries.getSQuery(query, None).decode('utf-8'), "medium_missions")
-        
+            self.assertEqual(Queries.getSQuery(
+                query, None).decode('utf-8'), "medium_missions")
+
             query = "SHOW TABLES IN ChessMate LIKE 'hard_missions';"
-            self.assertEqual(Queries.getSQuery(query, None).decode('utf-8'), "hard_missions")
-        
+            self.assertEqual(Queries.getSQuery(
+                query, None).decode('utf-8'), "hard_missions")
+
             query = "SHOW TABLES IN ChessMate LIKE 'expert_missions';"
-            self.assertEqual(Queries.getSQuery(query, None).decode('utf-8'), "expert_missions")
+            self.assertEqual(Queries.getSQuery(
+                query, None).decode('utf-8'), "expert_missions")
 
             Connect.dropMissions()
-        
+
             query = "SHOW TABLES IN ChessMate LIKE 'easy_missions';"
             self.assertIsNone(Queries.getSQuery(query, None))
 
@@ -63,10 +68,12 @@ class TestConnect(unittest.TestCase):
             Connect.close()
 
 # ACCOUNT
+
+
 class TestAccount(unittest.TestCase):
     def test_salt(self):
         self.assertIsNotNone(Account.generateSalt())
-    
+
     def test_hash_init(self):
         password = salt = "1234"
         self.assertIsNotNone(Account.hash(password, salt))
@@ -79,7 +86,8 @@ class TestAccount(unittest.TestCase):
         try:
             username = password = email = "TEST"
             Account.register(username, email, password)
-            query = "SELECT COUNT(*) FROM {0}.login WHERE name = %s;".format(Connect.db)
+            query = "SELECT COUNT(*) FROM {0}.login WHERE name = %s;".format(
+                Connect.db)
             self.assertEqual(Queries.getSQuery(query, username), 1)
             self.assertTrue(Account.emailExists(email))
             self.assertTrue(Account.accountExists(username))
@@ -93,11 +101,11 @@ class TestAccount(unittest.TestCase):
             print(e)
         finally:
             Connect.close()
-    
+
     def test_login(self):
         Connect.connect()
         Connect.setupDB()
-        
+
         try:
             username = password = email = "TEST"
             Account.register(username, email, password)
@@ -123,4 +131,27 @@ class TestQueries(unittest.TestCase):
         self.assertFalse(Queries.doQuery(None, None))
         self.assertFalse(Queries.doQuery("", None))
 
-    # TO DO
+    def test_getAllQuery_init(self):
+        self.assertIsNone(Queries.getAllQuery(None, None))
+        self.assertIsNone(Queries.getAllQuery("", None))
+
+    def test_getSQuery(self):
+        query = "DELETE FROM leaderboard WHERE name = %s;"
+        Queries.doQuery(query, ("test"))
+        query = "DELETE FROM login WHERE name = %s;"
+        Queries.doQuery(query, ("test"))
+
+    def test_getAllQuery(self):
+        Connect.connect()
+        Connect.setupDB()
+
+        query = "SELECT * FROM easy_missions;"
+        self.assertIsNotNone(Queries.getAllQuery(query, None))
+        query = "SELECT * FROM medium_missions;"
+        self.assertIsNotNone(Queries.getAllQuery(query, None))
+        query = "SELECT * FROM hard_missions;"
+        self.assertIsNotNone(Queries.getAllQuery(query, None))
+        query = "SELECT * FROM expert_missions;"
+        self.assertIsNotNone(Queries.getAllQuery(query, None))
+
+        Connect.close()
