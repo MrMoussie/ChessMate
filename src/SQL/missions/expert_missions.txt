@@ -1,8 +1,8 @@
 Kill a horse using a horse
 Kill a rook using a rook
 Kill the queen using the king
-Finish the game in 4 moves(scholar’s mate applicable)
-Revive a piece
 Give a check using a pawn
 Eliminate all opponent pieces before the king in a single game
+Promote a pawn
+Finish the game in 4 moves(scholar’s mate applicable)
 Win 4 games in a row
