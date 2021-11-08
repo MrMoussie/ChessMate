@@ -51,7 +51,6 @@ def close():
         sql = None
         print("SQL: Connection closed!")
 
-
 # Create database and table in case it does not already exist
 def setupDB():
     global sql
@@ -64,15 +63,17 @@ def setupDB():
         mycursor.execute('CREATE TABLE IF NOT EXISTS login (%s, %s, %s, %s)' % 
             ("name VARCHAR(25) PRIMARY KEY", "email VARCHAR(255) UNIQUE", "hash VARCHAR(255) NOT NULL", "salt VARCHAR(255) NOT NULL"))
 
-        mycursor.execute('CREATE TABLE IF NOT EXISTS elo (%s, %s)' %
-                         ("name VARCHAR(25) PRIMARY KEY", "elo INT NOT NULL"))
-
         for i in range(len(missionFiles)):
             mycursor.execute('CREATE TABLE IF NOT EXISTS %s (%s, %s)' %
                 (missionFiles[i].split(".")[0], "id INT PRIMARY KEY AUTO_INCREMENT", "description VARCHAR(255)"))
         
         setupMissions()
 
+
+        mycursor.execute('CREATE TABLE IF NOT EXISTS leaderboard (%s, %s, %s, %s, %s, %s, %s);' % 
+            ("name VARCHAR(25) PRIMARY KEY", "elo INT", "missionPoints INT", "wins INT", "loss INT", "winrate INT", "FOREIGN KEY(name) REFERENCES login(name)"))
+
+        sql.commit()
 
 # Delete database
 def dropDB():
