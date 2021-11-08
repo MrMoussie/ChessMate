@@ -1,13 +1,11 @@
 import chess
-import pygame.display
 import sys
 import Missions
-import Rewards
-
 from Players import Player
 from ComputerPlayer import Naive
 from ComputerPlayer import Smart
 import Rewards
+import pygame
 
 sys.path.append("../GUI")
 import board as Board
@@ -28,15 +26,23 @@ print(board)
 screen = None
 BOARD = None
 
-MISSIONS = ['Kill 1 pawn using a pawn', 'Kill 4 pawns in a single match', 'Kill 1 bishop',
-            'Kill the queen using the queen']
+MISSIONS = ['Eliminate all opponent pieces before the king in a single game', 'Promote a pawn', 'Give a check using a pawn',
+            'Kill 2 pawns in a single game']
+
+move1 = ['e2e4', 'e4e5', 'e5e6', 'e6f7', 'd1f3', 'f3g3']
+move2 = ['a7a6', 'a6a5', 'a5a4', 'e8f7', 'f7g6', 'g6f6']
+c = ['e2e4', 'f7f6', 'd1h5', 'g7g6', 'f2f4', 'a7a6', 'f4f5', 'a6a5', 'f5g6', 'a5a4', 'g6h7']
+
 
 def start(window, player_id, missions, alert_function):
     turn = 0
     count = 0
     player2 = PLAYERS[player_id]
-    Rewards.set_missions(MISSIONS)
-    while not board.is_checkmate():
+    Rewards.set_missions(missions)
+    player = 0
+    while not board.is_game_over(claim_draw=True):
+        print(board.outcome())
+        print('checkmate', board.is_checkmate())
         Board.draw_board(board.fen(), window)
         pygame.display.update()
         time.sleep(2)
@@ -45,24 +51,34 @@ def start(window, player_id, missions, alert_function):
             move = player1.makeMove(board)
             while move is None:
                 move = player1.makeMove(board)
-            Rewards.analyzeMove(board, player, move, alert_function)
-            count = count + 1
-            Rewards.count_moves(count, board)
-            board.push(move)
+            is_promote = False
+            if len(str(move)) > 4:
+                is_promote = True
+            killer, victim, castling, check = Rewards.analyzeMove(board, move, promote=is_promote)
+            Rewards.do_missions(check, victim, killer, player, castling, alert_function, promoted=is_promote)
+            # count = count + 1
+            # Rewards.count_moves(count, board)
+            board.push_san(str(move))
             turn += 1
         else:
             if player_id == 0:
                 move = player2.makeMove(board)
                 while move is None:
                     move = player2.makeMove(board)
-                Rewards.analyzeMove(board, player, move, alert_function)
-                count = count + 1
-                Rewards.count_moves(count, board)
-                board.push(move)
+                is_promote = False
+                if len(str(move)) > 4:
+                    is_promote = True
+                killer, victim, castling, check = Rewards.analyzeMove(board, move, promote=is_promote)
+                Rewards.do_missions(check, victim, killer, player, castling, alert_function, promoted=is_promote)
+                # count = count + 1
+                # Rewards.count_moves(count, board)
+                board.push_san(str(move))
             else:
                 move = player2.makeMove(board)
-                Rewards.analyzeMove(board, player, move, alert_function)
                 board.push(move)
             turn += 1
+        Rewards.give_check(player, board.is_check())  # sends a check checker to the opponent
         print(board)
-        # move = ("".join(voice.getMove().split(" "))).lower()
+    Rewards.end_game(player, alert_function)
+
+#start(screen, 0, MISSIONS, None)
