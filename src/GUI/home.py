@@ -9,7 +9,7 @@ sys.path.append("../Chess")
 import game, Missions
 
 sys.path.append("../SQL")
-import Connect, Account, Queries
+import Connect, Account
 import atexit
 from time import sleep
 
@@ -268,37 +268,36 @@ while is_running:
 
         # pol.draw_ui(window_surface)
     elif i == 4:
-        query = "SELECT * FROM leaderboard;"
-        result = Queries.getAllQuery(query, None)
+        result = Missions.getLeaderboard()
         
-        window_surface.fill((255, 255, 255))
-        window_surface.blit(leaderboard_obj, (280, 50))
+        if (result != None and len(result) != 0):
+            window_surface.fill((255, 255, 255))
+            window_surface.blit(leaderboard_obj, (280, 50))
 
-        window_surface.blit(leaderboard_name, (50, 100))
-        window_surface.blit(leaderboard_elo, (180, 100))
-        window_surface.blit(leaderboard_points, (280, 100))
-        window_surface.blit(leaderboard_wins, (420, 100))
-        window_surface.blit(leaderboard_loss, (550, 100))
-        window_surface.blit(leaderboard_winrate, (650, 100))
+            window_surface.blit(leaderboard_name, (50, 100))
+            window_surface.blit(leaderboard_elo, (180, 100))
+            window_surface.blit(leaderboard_points, (280, 100))
+            window_surface.blit(leaderboard_wins, (420, 100))
+            window_surface.blit(leaderboard_loss, (550, 100))
+            window_surface.blit(leaderboard_winrate, (650, 100))
 
-        height = 150
+            height = 150
 
-        for row in result:
-            name = font_obj.render(row[0].decode('utf-8'), True, mission_color)  
-            elo = font_obj.render(str(row[1]), True, mission_color)  
-            points = font_obj.render(str(row[2]), True, mission_color)  
-            wins = font_obj.render(str(row[3]), True, mission_color)  
-            loss = font_obj.render(str(row[4]), True, mission_color)  
-            winrate = font_obj.render(str(row[5]), True, mission_color)  
-            window_surface.blit(name, (50, height))
-            window_surface.blit(elo, (180, height))
-            window_surface.blit(points, (280, height))
-            window_surface.blit(wins, (420, height))
-            window_surface.blit(loss, (550, height))
-            window_surface.blit(winrate, (650, height))
+            for row in result:
+                name = font_obj.render("", True, mission_color) if row[0] == None else font_obj.render(row[0].decode('utf-8'), True, mission_color)  
+                elo = font_obj.render("", True, mission_color) if row[1] == None else font_obj.render(str(row[1]), True, mission_color)  
+                points = font_obj.render("", True, mission_color) if row[2] == None else font_obj.render(str(row[2]), True, mission_color)  
+                wins = font_obj.render("", True, mission_color) if row[3] == None else font_obj.render(str(row[3]), True, mission_color)  
+                loss = font_obj.render("", True, mission_color) if row[4] == None else font_obj.render(str(row[4]), True, mission_color)  
+                winrate = font_obj.render("", True, mission_color) if row[5] == None else font_obj.render(str(row[5]), True, mission_color)  
+                window_surface.blit(name, (50, height))
+                window_surface.blit(elo, (180, height))
+                window_surface.blit(points, (280, height))
+                window_surface.blit(wins, (420, height))
+                window_surface.blit(loss, (550, height))
+                window_surface.blit(winrate, (650, height))
 
-            height += 50
-
+                height += 40
 
         daan.update(time_delta)
         daan.draw_ui(window_surface)
