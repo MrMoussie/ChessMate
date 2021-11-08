@@ -21,8 +21,15 @@ def analyze_promotion(board, move):
 
 
 class Player:
+    elo = 1000
     def __init__(self):
         self.name = 'opponent'
+
+    def set_elo(self, amount):
+        self.elo = amount
+
+    def get_elo(self):
+        return self.elo
 
     def set_name(self, name):
         self.name = name
