@@ -13,6 +13,8 @@ import Connect, Account
 import atexit
 from time import sleep
 
+theme = "theme.json"
+
 pygame.init()
 pygame.display.set_caption('ChessMate')
 window_surface = pygame.display.set_mode(config.home_size, pygame.RESIZABLE)
@@ -38,13 +40,13 @@ register_confirm_password = font_obj.render("Confirm Password", True, font_color
 
 i = 0
 
-manager = pygame_gui.UIManager(config.home_size)
-bob = pygame_gui.UIManager(config.home_size)
-petra = pygame_gui.UIManager(config.home_size)
-pol = pygame_gui.UIManager(config.home_size)
-daan = pygame_gui.UIManager(config.home_size)
-players = pygame_gui.UIManager(config.home_size)
-MISSIONS = pygame_gui.UIManager(config.home_size)
+manager = pygame_gui.UIManager(config.home_size, theme)
+bob = pygame_gui.UIManager(config.home_size, theme)
+petra = pygame_gui.UIManager(config.home_size, theme)
+pol = pygame_gui.UIManager(config.home_size, theme)
+daan = pygame_gui.UIManager(config.home_size, theme)
+players = pygame_gui.UIManager(config.home_size, theme)
+MISSIONS = pygame_gui.UIManager(config.home_size, theme)
 
 ButtonLayoutRectL = pygame.Rect(340, 350, 100, 30)
 ButtonLayoutRectS = pygame.Rect(340, 400, 100, 30)
