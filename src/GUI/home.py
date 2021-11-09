@@ -134,7 +134,6 @@ if (not Connect.connectExists()):
     alert_popup("Error", "Program can not connect to SQL with given credentials!", "Please refer to the README file to setup a database.")
     is_running = False
 
-
 if (not Connect.connectExists):
     alert_popup("Error", "Program can not connect to SQL with given credentials!",
                 "Please refer to the README in the SQL folder.")
@@ -169,6 +168,9 @@ leaderboard_wins = font_obj.render("Wins", True, font_color)
 leaderboard_loss = font_obj.render("Loss", True, font_color)
 leaderboard_winrate = font_obj.render("Winrate", True, font_color)
 
+name = elo = points = wins = loss = winrate = font_obj.render("", True, mission_color)
+click = True
+
 while is_running:        
     window_surface.fill((255, 255, 255))
     window_surface.blit(text_obj, (300, 100))
@@ -198,6 +200,7 @@ while is_running:
                 elif event.ui_element == GoBack2:
                     i = 6
                 elif event.ui_element == GoBack3:
+                    click = True
                     i = 1
                 elif event.ui_element == SignUpScreen:
                     i = 7
@@ -268,37 +271,39 @@ while is_running:
 
         # pol.draw_ui(window_surface)
     elif i == 4:
-        result = Leaderboard.getLeaderboard()
+        result = None if not click else Leaderboard.getLeaderboard()
+        click = False
         
-        if (result != None and len(result) != 0):
-            window_surface.fill((255, 255, 255))
-            window_surface.blit(leaderboard_obj, (280, 50))
+        window_surface.fill((255, 255, 255))
+        window_surface.blit(leaderboard_obj, (280, 50))
 
-            window_surface.blit(leaderboard_name, (50, 100))
-            window_surface.blit(leaderboard_elo, (180, 100))
-            window_surface.blit(leaderboard_points, (280, 100))
-            window_surface.blit(leaderboard_wins, (420, 100))
-            window_surface.blit(leaderboard_loss, (550, 100))
-            window_surface.blit(leaderboard_winrate, (650, 100))
+        window_surface.blit(leaderboard_name, (50, 100))
+        window_surface.blit(leaderboard_elo, (180, 100))
+        window_surface.blit(leaderboard_points, (280, 100))
+        window_surface.blit(leaderboard_wins, (420, 100))
+        window_surface.blit(leaderboard_loss, (550, 100))
+        window_surface.blit(leaderboard_winrate, (650, 100))
 
-            height = 150
+        height = 150
 
+        if (result != None):
             for row in result:
-                name = font_obj.render("", True, mission_color) if row[0] == None else font_obj.render(row[0].decode('utf-8'), True, mission_color)  
-                elo = font_obj.render("", True, mission_color) if row[1] == None else font_obj.render(str(row[1]), True, mission_color)  
-                points = font_obj.render("", True, mission_color) if row[2] == None else font_obj.render(str(row[2]), True, mission_color)  
-                wins = font_obj.render("", True, mission_color) if row[3] == None else font_obj.render(str(row[3]), True, mission_color)  
-                loss = font_obj.render("", True, mission_color) if row[4] == None else font_obj.render(str(row[4]), True, mission_color)  
-                winrate = font_obj.render("", True, mission_color) if row[5] == None else font_obj.render(str(row[5]), True, mission_color)  
-                window_surface.blit(name, (50, height))
-                window_surface.blit(elo, (180, height))
-                window_surface.blit(points, (280, height))
-                window_surface.blit(wins, (420, height))
-                window_surface.blit(loss, (550, height))
-                window_surface.blit(winrate, (650, height))
-
-                height += 40
-
+                name = name if row[0] == None else font_obj.render(row[0].decode('utf-8'), True, mission_color)  
+                elo = elo if row[1] == None else font_obj.render(str(row[1]), True, mission_color)  
+                points = points if row[2] == None else font_obj.render(str(row[2]), True, mission_color)  
+                wins = wins if row[3] == None else font_obj.render(str(row[3]), True, mission_color)  
+                loss = loss if row[4] == None else font_obj.render(str(row[4]), True, mission_color)  
+                winrate = winrate if row[5] == None else font_obj.render(str(row[5]), True, mission_color)  
+        
+        window_surface.blit(name, (50, height))
+        window_surface.blit(elo, (180, height))
+        window_surface.blit(points, (280, height))
+        window_surface.blit(wins, (420, height))
+        window_surface.blit(loss, (550, height))
+        window_surface.blit(winrate, (650, height))    
+        
+        height += 40
+            
         daan.update(time_delta)
         daan.draw_ui(window_surface)
     elif i == 5:
