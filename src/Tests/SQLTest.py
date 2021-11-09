@@ -140,6 +140,7 @@ class TestQueries(unittest.TestCase):
         Queries.doQuery(query, ("test"))
         query = "DELETE FROM login WHERE name = %s;"
         Queries.doQuery(query, ("test"))
+        
 
     def test_getAllQuery(self):
         Connect.connect()

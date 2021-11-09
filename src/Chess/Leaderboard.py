@@ -14,7 +14,7 @@ def updateElo(name, elo):
 
 def getElo(name):
     query = "SELECT elo FROM leaderboard WHERE name = %s;"
-    Queries.getSQuery(query, name)
+    return Queries.getSQuery(query, name)
 
 def addElo(name, elo):
     query = "UPDATE leaderboard SET elo = elo + %s WHERE name = %s;"
@@ -25,13 +25,13 @@ def addPoints(name, points):
     Queries.doQuery(query, (points, name))
 
 def incrementWins(name):
-    query = "UPDATE leaderboard SET missionPoints = missionPoints + 1 WHERE name = %s;"
+    query = "UPDATE leaderboard SET wins = wins + 1 WHERE name = %s;"
     Queries.doQuery(query, (name, ))
 
     updateWinrate()
 
 def incrementLoss(name):
-    query = "UPDATE leaderboard SET missionPoints = missionPoints + 1 WHERE name = %s;"
+    query = "UPDATE leaderboard SET loss = loss + 1 WHERE name = %s;"
     Queries.doQuery(query, (name, ))
 
     updateWinrate()

@@ -73,8 +73,6 @@ def setupDB():
         mycursor.execute('CREATE TABLE IF NOT EXISTS leaderboard (%s, %s, %s, %s, %s, %s, %s);' % 
             ("name VARCHAR(25) PRIMARY KEY", "elo INT", "missionPoints INT", "wins INT", "loss INT", "winrate INT", "FOREIGN KEY(name) REFERENCES login(name)"))
 
-        #mycursor.execute('UPDATE leaderboard SET winrate (CASE WHEN wins = 0 THEN 0 WHEN loss = 0 THEN 100')
-
         sql.commit()
 
 # Delete database
