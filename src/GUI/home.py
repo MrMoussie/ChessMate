@@ -382,7 +382,7 @@ while is_running:
             game_thread.start()
             started_thread = True
             start_thread = False
-        window_surface = pygame.display.set_mode((config.bg.get_width() + 350, config.bg.get_height()), pygame.RESIZABLE)
+        window_surface = pygame.display.set_mode((config.bg.get_width() + 375, config.bg.get_height()), pygame.RESIZABLE)
         board.draw_board(game.get_new_fen(), window_surface)
         player_turn = font_obj.render(("Turn: " + game.get_turn()), True, font_color)
         window_surface.blit(mission_text_obj, (575, 140))
