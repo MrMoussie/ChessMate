@@ -395,9 +395,9 @@ while is_running:
             mission_easy_text_game = font_obj_game.render(easy_mission, True, green)
         if completed[1] == 1:
             mission_medium_text_game = font_obj_game.render(medium_mission, True, green)
-        if completed[1] == 1:
+        if completed[2] == 1:
             mission_hard_text_game = font_obj_game.render(hard_mission, True, green)
-        if completed[1] == 1:
+        if completed[3] == 1:
             mission_expert_text_game = font_obj_game.render(expert_mission, True, green)
         window_surface.blit(mission_easy_text_game, (550, 200))
         window_surface.blit(mission_medium_text_game, (550, 250))
