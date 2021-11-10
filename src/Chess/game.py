@@ -17,7 +17,7 @@ board = chess.Board()
 player1 = Player()
 # player2 = Naive('s')
 PLAYERS = [Player(), Naive(), Smart()]
-
+FLAGS = [0, 0, 0, 0]
 
 print(board)
 
@@ -38,7 +38,13 @@ def set_new_fen(fen):
 def get_new_fen():
     return FEN
 
+def get_flags():
+    return FLAGS
 
+def set_turn(turn):
+    global TURN
+    TURN = turn
+    
 def start(player_name2, player_id2, player_name1, missions, alert_function):
     turn = 0
     player1.set_name(player_name1)

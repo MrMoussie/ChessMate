@@ -19,6 +19,8 @@ pygame.init()
 pygame.display.set_caption('ChessMate')
 window_surface = pygame.display.set_mode(config.home_size, pygame.RESIZABLE)
 
+pygame.display.set_icon(config.programIcon)
+
 font_color = (0, 150, 250)
 font_obj = pygame.font.Font("fonts/segoeprb.ttf", 25)
 font_obj_game = pygame.font.Font("fonts/segoeprb.ttf", 15)
@@ -387,6 +389,16 @@ while is_running:
         board.draw_board(game.get_new_fen(), window_surface)
         player_turn = font_obj.render(("Turn: " + game.get_turn()), True, font_color)
         window_surface.blit(mission_text_obj, (575, 140))
+        completed = game.get_flags()
+        green = (0, 250, 0)
+        if completed[0] == 1:
+            mission_easy_text_game = font_obj_game.render(easy_mission, True, green)
+        if completed[1] == 1:
+            mission_medium_text_game = font_obj_game.render(medium_mission, True, green)
+        if completed[1] == 1:
+            mission_hard_text_game = font_obj_game.render(hard_mission, True, green)
+        if completed[1] == 1:
+            mission_expert_text_game = font_obj_game.render(expert_mission, True, green)
         window_surface.blit(mission_easy_text_game, (550, 200))
         window_surface.blit(mission_medium_text_game, (550, 250))
         window_surface.blit(mission_hard_text_game, (550, 300))

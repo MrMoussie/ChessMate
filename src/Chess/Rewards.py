@@ -33,6 +33,8 @@ CON = {0: [0], 1: [0]}
 """Tracking points"""
 POINTS = {0: [0], 1: [0]}
 
+def get_flags():
+    return M_FLAGS
 
 """
 CHECK WHICH PIECE KILL WHICH
