@@ -23,6 +23,10 @@ def addElo(name, elo):
 def addPoints(name, points):
     query = "UPDATE leaderboard SET missionPoints = missionPoints + %s WHERE name = %s;"
     Queries.doQuery(query, (points, name))
+    
+def setPoints(name, points):
+    query = "UPDATE leaderboard SET missionPoints = %s WHERE name = %s;"
+    Queries.doQuery(query, (points, name))
 
 def incrementWins(name):
     query = "UPDATE leaderboard SET wins = wins + 1 WHERE name = %s;"

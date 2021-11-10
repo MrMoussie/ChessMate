@@ -1,10 +1,13 @@
 import pygame
 
+import os
+dir = os.path.dirname(os.path.abspath(__file__))
+
 START_FEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR"
-image_dir = "images/"
+image_dir = dir + "/images/"
 pieces = ["Bishop", "King", "Knight", "Pawn", "Queen", "Rook"]
 home_size = (800, 600)
-bg = pygame.image.load("images/chessboard.png")
-# bg = pygame.image.load("images/numchessboard.jpg")
-bg_offset = 32
-use_offset = False
+bg = pygame.image.load(dir + "/images/numchessboard.jpg")
+bg = pygame.transform.scale(bg, (512, 512))
+bg_offset = 39
+use_offset = True

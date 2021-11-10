@@ -1,4 +1,7 @@
 import chess
+import Leaderboard
+"""Tracking players' names"""
+PLAYERS_NAMES = ['','']
 
 """MAPPING PIECES CHAR TO STRINGS"""
 dic = {'p': 'pawn', 'n': 'knight',
@@ -6,7 +9,7 @@ dic = {'p': 'pawn', 'n': 'knight',
        'b': 'bishop', 'r': 'rook'}
 
 """TRACKING VICTIMS OF PLAYERS"""
-victims = {0: [], 1: []}
+victims = None
 checks = {}
 
 
@@ -98,8 +101,18 @@ def check_only_king_on_board(player_id, mission, mission_id, alert_function):
 SET MISSIONS GLOBALLY FOR BOTH PLAYERS
 """
 def set_missions(m):
+    global victims
+    victims = {0: [], 1: []}
     global MISSIONS
     MISSIONS = m
+
+
+def set_players(player_name1, player_id1, player_name2, player_id2):
+    global PLAYERS_NAMES
+    print(player_name1, player_name2)
+    PLAYERS_NAMES[player_id1] = player_name1
+    PLAYERS_NAMES[player_id2] = player_name2
+    print(PLAYERS_NAMES)
 
 
 """CHECK IF THERE IS A VICTIM"""
@@ -133,7 +146,12 @@ def end_game(player_id, alert_function):
         end_game_within_moves(win_a_game_twenty, player_id, alert_function)
     elif win_a_game_thirty in MISSIONS and MOVES.get(player_id)[0] <= 30:
         end_game_within_moves(win_a_game_thirty, player_id, alert_function)
-    print(get_total_points(player_id))
+    total_points = get_total_points_board(player_id) + get_total_points_missions(player_id)
+    Leaderboard.addPoints(PLAYERS_NAMES[player_id], total_points)
+    Leaderboard.incrementWins(PLAYERS_NAMES[player_id])
+    PLAYERS_NAMES.remove(PLAYERS_NAMES[player_id])
+    Leaderboard.addPoints(PLAYERS_NAMES[0], total_points)
+    Leaderboard.incrementLoss(PLAYERS_NAMES[0])
     return
 
 
@@ -144,8 +162,8 @@ def end_game_within_moves(win_a_game_moves, player_id, alert_function):
 
 """SEND MISSION TO GUI TO DISPLAY  IT ONCE IT'S DONE"""
 def send_mission_completed(string, player_id, mission_id, alert_function):
-    print(f'MISSION COMPLETED! {string} Good job Player {player_id}!')
-    # alert_function("MISSION COMPLETED!", f'{string}', f"Good job Player {player_id}!")
+    print(f'MISSION COMPLETED! {string} Good job Player {PLAYERS_NAMES[player_id]}!')
+    alert_function("MISSION COMPLETED!", f'{string}', f"Good job Player {PLAYERS_NAMES[player_id]}!", destroy=True)
     MISSIONS[mission_id] = 'COMPLETED'
     M_FLAGS[mission_id] = 1
     print(MISSIONS)
@@ -209,6 +227,7 @@ def check_one_kill(player_id, mission, mission_id, alert_function):
         if victims.get(player_id).count('pawn') == 1 and MOVES.get(player_id)[0] <= 6:
             send_mission_completed(mission, player_id, mission_id, alert_function)
             update_points(mission_id, player_id)
+
     #MEDIUM MISSIONS
     elif mission == 'Get 1 pawn killed within the first 4 moves':
         if victims.get(player_id).count('pawn') == 1 and MOVES.get(player_id)[0] <= 4:
@@ -231,7 +250,7 @@ def check_one_kill(player_id, mission, mission_id, alert_function):
 """CHECK COUNT PAWN MISSIONS EITHER 2 OR 4 PAWNS"""
 def check_pawns(player_id, mission, mission_id, alert_function):
     pawns_killed = victims.get(player_id).count("pawn")
-    if mission == 'Eliminate all opponent pawns in a single game' and pawns_killed == 8:
+    if mission == 'Kill all pieces before the king' and pawns_killed == 8:
         send_mission_completed(mission, player_id, mission_id, alert_function)
         update_points(mission_id, player_id)
     if mission == 'Kill 2 pawns in a single game' and pawns_killed == 2:
@@ -287,18 +306,8 @@ def get_total_points_missions(player):
 
 def get_total_points_board(player):
     pawn = victims.get(player).count('pawn')
-    bishop = victims.get(player).count('bishop')
-    queen = victims.get(player).count('queen')
-    rook = victims.get(player).count('rook')
-    knight = victims.get(player).count('knight')
-
-
-
-def count_moves(m, board):
-    if m == 4 and board.is_checkmate():
-        print("something")
-    elif m <= 20 and board.is_checkmate():
-        print("something")
-    elif m <= 40 and board.is_checkmate():
-        print("something")
-
+    bishop = victims.get(player).count('bishop')*4
+    queen = victims.get(player).count('queen')*5
+    rook = victims.get(player).count('rook')*3
+    knight = victims.get(player).count('knight')*2
+    return pawn + bishop + queen + rook + knight
