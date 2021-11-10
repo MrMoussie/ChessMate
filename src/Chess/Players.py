@@ -1,8 +1,10 @@
-import chess
+import chess, Leaderboard
 
 import utils
 import voice
 import re
+
+
 
 
 def analyze_promotion(board, move):
@@ -21,12 +23,14 @@ def analyze_promotion(board, move):
 
 
 class Player:
-    elo = 1000
+    elo = 0
     def __init__(self):
         self.name = 'opponent'
+        self.elo = Leaderboard.getElo(self.name)
 
     def set_elo(self, amount):
         self.elo = amount
+        Leaderboard.updateElo(self.name, self.elo)
 
     def get_elo(self):
         return self.elo

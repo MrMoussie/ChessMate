@@ -11,7 +11,7 @@ import game, Missions, Leaderboard
 sys.path.append("../SQL")
 import Connect, Account
 import atexit
-from time import sleep
+import time
 
 theme = "theme.json"
 
@@ -21,6 +21,7 @@ window_surface = pygame.display.set_mode(config.home_size, pygame.RESIZABLE)
 
 font_color = (0, 150, 250)
 font_obj = pygame.font.Font("fonts/segoeprb.ttf", 25)
+font_obj_game = pygame.font.Font("fonts/segoeprb.ttf", 15)
 font_obj_main = pygame.font.Font("fonts/segoeprb.ttf", 35)
 text_obj = font_obj_main.render("ChessMate", True, font_color)
 
@@ -47,6 +48,7 @@ pol = pygame_gui.UIManager(config.home_size, theme)
 daan = pygame_gui.UIManager(config.home_size, theme)
 players = pygame_gui.UIManager(config.home_size, theme)
 MISSIONS = pygame_gui.UIManager(config.home_size, theme)
+second = pygame_gui.UIManager(config.home_size, theme)
 
 ButtonLayoutRectL = pygame.Rect(340, 350, 100, 30)
 ButtonLayoutRectS = pygame.Rect(340, 400, 100, 30)
@@ -55,6 +57,7 @@ ButtonLayoutRectU = pygame.Rect(340, 450, 100, 30)
 EntryLayoutRectU = pygame.Rect(250, 200, 300, 40)
 EntryLayoutRectP = pygame.Rect(250, 300, 300, 40)
 EntryLayoutRectR = pygame.Rect(250, 150, 300, 40)
+ButtonLayoutRect2 = pygame.Rect(340, 390, 100, 30)
 
 Login = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectL, text='Login', manager=manager)
 SignUp = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Sign up', manager=manager)
@@ -63,6 +66,11 @@ Username = pygame_gui.elements.UITextEntryLine(relative_rect=EntryLayoutRectU, m
 Password = pygame_gui.elements.UITextEntryLine(relative_rect=EntryLayoutRectP, manager=manager)
 # Username.set_text("Username")
 # Password.set_text("Password")
+
+Login2 = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Login', manager=second)
+Quit2 = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectT, text='Return', manager=second)
+Username2 = pygame_gui.elements.UITextEntryLine(relative_rect=EntryLayoutRectU, manager=second)
+Password2 = pygame_gui.elements.UITextEntryLine(relative_rect=EntryLayoutRectP, manager=second)
 
 PlayGame = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectL, text='Play game', manager=bob)
 ScoreBoard = pygame_gui.elements.UIButton(relative_rect=ButtonLayoutRectS, text='Leaderboard', manager=bob)
@@ -99,7 +107,7 @@ Connect.connect()
 Connect.setupDB()
 
 
-def alert_popup(title, message, path):
+def alert_popup(title, message, path, destroy=False):
     """Generate a pop-up window for special messages."""
     root = Tk()
     root.title(title)
@@ -115,6 +123,10 @@ def alert_popup(title, message, path):
     m += path
     w = Label(root, text=m, width=120, height=10)
     w.pack()
+    if destroy:
+        root.after(2000, lambda: root.destroy())
+        root.mainloop()
+        return
     b = Button(root, text="OK", command=root.destroy, width=10)
     b.pack()
     mainloop()
@@ -139,7 +151,7 @@ if (not Connect.connectExists()):
 if (not Connect.connectExists):
     alert_popup("Error", "Program can not connect to SQL with given credentials!",
                 "Please refer to the README in the SQL folder.")
-    sleep(5)
+    time.sleep(5)
     is_running = False
 
 #################################################
@@ -157,10 +169,17 @@ expert_mission = "" if expert_mission == None else expert_mission.decode('utf-8'
 
 font_obj = pygame.font.Font("fonts/segoeprb.ttf", 25)
 mission_color = (0, 0, 0)
+mission_color_game = (255, 255, 255)
 mission_easy_text = font_obj.render(easy_mission, True, mission_color)  
 mission_medium_text = font_obj.render(medium_mission, True, mission_color)  
 mission_hard_text = font_obj.render(hard_mission, True, mission_color)  
 mission_expert_text = font_obj.render(expert_mission, True, mission_color) 
+
+mission_easy_text_game = font_obj_game.render(easy_mission, True, mission_color_game)  
+mission_medium_text_game = font_obj_game.render(medium_mission, True, mission_color_game) 
+mission_hard_text_game = font_obj_game.render(hard_mission, True, mission_color_game)  
+mission_expert_text_game = font_obj_game.render(expert_mission, True, mission_color_game) 
+
 
 leaderboard_obj = font_obj_main.render("Leaderboard", True, font_color)  
 leaderboard_name = font_obj.render("Name", True, font_color)
@@ -173,6 +192,11 @@ leaderboard_winrate = font_obj.render("Winrate", True, font_color)
 name = elo = points = wins = loss = winrate = font_obj.render("", True, mission_color)
 click = True
 
+MISSIONS_GAME = [easy_mission, medium_mission, hard_mission, expert_mission]
+MISSIONS_GAME = ['Eliminate all opponent pieces before the king in a single game', 'Promote a pawn', 'Give a check using a pawn',
+            'Kill 2 pawns in a single game']
+started_thread = False
+
 while is_running:        
     window_surface.fill((255, 255, 255))
     window_surface.blit(text_obj, (300, 100))
@@ -181,6 +205,9 @@ while is_running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             is_running = False
+            Connect.close()
+            pygame.quit()
+            sys.exit()
 
         if event.type == pygame.USEREVENT:
             if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
@@ -210,10 +237,22 @@ while is_running:
                 #############################CHOOSING PLAYERS###############################
                 ############################################################################
                 elif event.ui_element == Player:
-                    window_surface = pygame.display.set_mode((config.bg.get_width(), config.bg.get_height()),
-                                                             pygame.RESIZABLE)
-                    i = 8
-                    PlayerNum = 0
+                    i = 12
+                    # Username.set_text("username")
+                    # Password.set_text("password")
+                elif event.ui_element == Login2:
+                    i = 12
+                    # i = 8
+                    if (Username2.get_text() == Username.get_text()):
+                        alert_popup("Error", "You can not log in on the same account twice!", "Please try again.")
+                    elif (Account.login(Username2.get_text(), Password2.get_text())):
+                        #print("hoi")
+                        i = 8
+                        PlayerNum = 0
+                    else:
+                        alert_popup("Error", "Either your password or username is incorrect.", "Please try again.")
+                #  else:
+                #      alert_popup("Error", "1", "2")
                 elif event.ui_element == Naive:
                     window_surface = pygame.display.set_mode((config.bg.get_width(), config.bg.get_height()),
                                                              pygame.RESIZABLE)
@@ -228,6 +267,8 @@ while is_running:
                     i = 3
                 elif event.ui_element == Quit:
                     is_running = False
+                elif event.ui_element == Quit2:
+                    i = 3
 
         if i == 0:
             manager.process_events(event)
@@ -249,6 +290,8 @@ while is_running:
             pol.process_events(event)
         elif i == 11:
             MISSIONS.process_events(event)
+        elif i == 12:
+            second.process_events(event)
     if i == 0:
         window_surface.blit(login_username, (100, 188))
         window_surface.blit(login_password, (100, 290))
@@ -332,8 +375,23 @@ while is_running:
         
         i = 2
     elif i == 8 or i == 9 or i == 10:
-        MISSIONS = [easy_mission, medium_mission, hard_mission, expert_mission]
-        game.start(window_surface, PlayerNum, MISSIONS, alert_popup)
+        start_thread = True
+        if start_thread and not started_thread:
+            game_thread = Thread(target=game.start, args=(Username2.get_text(), PlayerNum, Username.get_text(), MISSIONS_GAME, alert_popup))
+            game_thread.daemon = True
+            game_thread.start()
+            started_thread = True
+            start_thread = False
+        window_surface = pygame.display.set_mode((config.bg.get_width() + 350, config.bg.get_height()), pygame.RESIZABLE)
+        board.draw_board(game.get_new_fen(), window_surface)
+        player_turn = font_obj.render(("Turn: " + game.get_turn()), True, font_color)
+        window_surface.blit(mission_text_obj, (575, 140))
+        window_surface.blit(mission_easy_text_game, (550, 200))
+        window_surface.blit(mission_medium_text_game, (550, 250))
+        window_surface.blit(mission_hard_text_game, (550, 300))
+        window_surface.blit(mission_expert_text_game, (550, 350))
+        window_surface.blit(player_turn, (config.bg.get_width() + 50, 50))
+        pygame.display.update()
         pol.update(time_delta)
     elif i == 11:
         window_surface.fill((255, 255, 255))
@@ -350,8 +408,12 @@ while is_running:
 
         MISSIONS.update(time_delta)
         MISSIONS.draw_ui(window_surface)
+    elif i == 12:
+        window_surface.blit(login_username, (100, 188))
+        window_surface.blit(login_password, (100, 290))
         
-
+        second.update(time_delta)
+        second.draw_ui(window_surface)
 
     # window_surface.blit(background, (0, 0))
     # manager.draw_ui(window_surface)
