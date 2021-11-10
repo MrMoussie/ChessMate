@@ -193,8 +193,7 @@ name = elo = points = wins = loss = winrate = font_obj.render("", True, mission_
 click = True
 
 MISSIONS_GAME = [easy_mission, medium_mission, hard_mission, expert_mission]
-MISSIONS_GAME = ['Eliminate all opponent pieces before the king in a single game', 'Promote a pawn', 'Give a check using a pawn',
-            'Kill 2 pawns in a single game']
+
 started_thread = False
 
 while is_running:        
@@ -361,7 +360,9 @@ while is_running:
         bob.update(time_delta)
         bob.draw_ui(window_surface)
 
-        if (not PasswordEntry.get_text() == PasswordEntryRepeat.get_text()):
+        if (PasswordEntry.get_text() == "" or PasswordEntryRepeat.get_text() == "" or UsernameEntry.get_text() == "" or EmailAddressEntry.get_text() == ""):
+            alert_popup("Error", "Fill in all the fields!", "Please try again.")
+        elif (not PasswordEntry.get_text() == PasswordEntryRepeat.get_text()):
             alert_popup("Error", "The two passwords do not match each other!", "Please try again.")
         elif (Account.accountExists(UsernameEntry.get_text())):
             alert_popup("Error", "This user already exists!", "Please try again.")
