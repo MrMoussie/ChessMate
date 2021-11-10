@@ -165,7 +165,7 @@ def end_game_within_moves(win_a_game_moves, player_id, alert_function):
 """SEND MISSION TO GUI TO DISPLAY  IT ONCE IT'S DONE"""
 def send_mission_completed(string, player_id, mission_id, alert_function):
     print(f'MISSION COMPLETED! {string} Good job Player {PLAYERS_NAMES[player_id]}!')
-    alert_function("MISSION COMPLETED!", f'{string}', f"Good job Player {PLAYERS_NAMES[player_id]}!", destroy=True)
+    #alert_function("MISSION COMPLETED!", f'{string}', f"Good job Player {PLAYERS_NAMES[player_id]}!", destroy=True)
     MISSIONS[mission_id] = 'COMPLETED'
     M_FLAGS[mission_id] = 1
     print(MISSIONS)
